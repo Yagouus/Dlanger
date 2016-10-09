@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>anaLexico.h</itemPath>
+      <itemPath>anaSintactico.h</itemPath>
+      <itemPath>definiciones.h</itemPath>
+      <itemPath>tablaSimbolos.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,7 +16,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>anaLexico.c</itemPath>
+      <itemPath>anaSintactico.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>tablaSimbolos.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -36,7 +43,21 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="anaLexico.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="anaLexico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anaSintactico.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="anaSintactico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="definiciones.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tablaSimbolos.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tablaSimbolos.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -59,7 +80,21 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="anaLexico.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="anaLexico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anaSintactico.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="anaSintactico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="definiciones.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tablaSimbolos.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tablaSimbolos.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
