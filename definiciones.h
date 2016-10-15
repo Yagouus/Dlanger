@@ -1,29 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   definiciones.h
- * Author: yagouus
- *
- * Created on 9 de octubre de 2016, 16:58
- */
-
-#ifndef DEFINICIONES_H
-#define DEFINICIONES_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* DEFINICIONES_H */
-
+#define IMPORT 300
+#define ENFORCE 301
+#define LENGTH 302
+#define WHILE 303
+#define FOREACH 304
+#define RETURN 305
+#define VOID 306
+#define CAST 307
+#define SUM 308
+#define WRITEFLN 309
