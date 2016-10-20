@@ -23,22 +23,20 @@ compLex* sigCompLex() {
 
         switch (e) {
 
-                //Cadenas alfanuméricas
+                //Primer caracter que leemos
             case 1:
-                if (isalnum(c)) {
+                if (isalnum(c) || c == '_') { //Cadenas alfanumericas
                     e = 2;
-                } else if (isdigit(c)) {
+                } else if (isdigit(c)) { //Numeros
                     e = 3;
-                } else if (c == ' ') {
+                } else if (c == ' ' || c == '\n') {
                     c = sigCaracter();
-                } else if (c == '.') {
+                } else if (c == '.' || c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '=' || c == '<' || c == '>' || c == '*' || c == '-') {
                     comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
                     e = 0;
-                } else if (c == ';') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    e = 0;
+                } else if (c == '/') {
+                    e = 4;
                 } else {
                     return comp;
                 }
@@ -50,6 +48,9 @@ compLex* sigCompLex() {
                     //printf("%c", c);
                     comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
+                } else if (c == '_') { //Pueden contener _
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
                 } else {
                     e = 0;
                 }
@@ -57,13 +58,30 @@ compLex* sigCompLex() {
 
                 //Numeros
             case 3:
+                //Naturales
+                //Enteros
+                //Binarios
                 return comp;
+                break;
+
+                //Comentarios
+            case 4:
+                c = sigCaracter();
+                if (c == '/') {
+                    while(c != '\n'){
+                        c = sigCaracter();
+                    }
+                    c = sigCaracter();
+                    e = 1;
+                }else{
+                    e = 0;
+                }
                 break;
 
                 //Estado de aceptacion
             case 0:
-                retroceder();
-                return comp;
+                retroceder(); //"Devolvemos" un caracter           
+                return comp; //Devolvemos el componente al anaSintactico
                 break;
 
         }
