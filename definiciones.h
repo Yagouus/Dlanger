@@ -1,10 +1,21 @@
+//Funciones
 #define IMPORT 300
-#define ENFORCE 301
-#define LENGTH 302
-#define WHILE 303
-#define FOREACH 304
-#define RETURN 305
-#define VOID 306
-#define CAST 307
-#define SUM 308
-#define WRITEFLN 309
+#define WHILE 302
+#define FOREACH 303
+#define RETURN 304
+#define CAST 306
+#define WRITEFLN 307
+
+//Operadores
+#define MASIGUAL 310
+#define MASMAS 311
+#define IGUALIGUAL 312
+
+//Identificadores
+#define ID 313
+
+//Tipos de dato
+#define DOUBLE 314
+#define INT 315
+#define VOID 316
+
