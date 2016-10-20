@@ -14,7 +14,7 @@ compLex* sigCompLex() {
 
     //Inicializamos valores
     comp = (compLex *) malloc(sizeof (compLex));
-    comp->string = (char *) malloc(16);
+    comp->string = (char *) malloc(64);
     e = 1;
     c = sigCaracter();
 
@@ -32,12 +32,20 @@ compLex* sigCompLex() {
                     e = 3;
                 } else if (c == ' ' || c == '\n') {
                     c = sigCaracter();
-                } else if (c == '.' || c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '=' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}') {
+                } else if (c == '.' || c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}') {
                     comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
                     e = 0;
                 } else if (c == '/') {
                     e = 4;
+                } else if (c == '=') {
+                    e = 5;
+                } else if (c == '+') {
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
+                    e = 6;
+                } else if (c == '"') {
+                    e = 7;
                 } else {
                     return comp;
                 }
@@ -45,16 +53,7 @@ compLex* sigCompLex() {
 
                 //Cadenas alfanumericas
             case 2:
-                if (isalnum(c)) {
-                    //printf("%c", c);
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                } else if (c == '_') { //Pueden contener _
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                } else {
-                    e = 0;
-                }
+                alfanum();
                 break;
 
                 //Numeros
@@ -68,6 +67,31 @@ compLex* sigCompLex() {
                 //Comentarios
             case 4:
                 comentarios();
+                break;
+
+                // == 
+            case 5:
+                if (c == '=') {
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
+                } else {
+                    e = 0;
+                }
+                break;
+
+                // +=
+            case 6:
+                if (c == '=') {
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
+                } else {
+                    e = 0;
+                }
+                break;
+
+                //Cadenas entre " "
+            case 7:
+                comillas();
                 break;
 
                 //Estado de aceptacion
@@ -86,8 +110,22 @@ compLex* sigCompLex() {
 
 }
 
-//Funcion para reconocer comentarios
+void alfanum() {
+    if (isalnum(c)) {
+        //printf("%c", c);
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+    } else if (c == '_') { //Pueden contener _
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+    } else {
+        e = 0;
+    }
+} //Funcion para cadenas alfanumericas
+
 void comentarios() {
+
+    char p = c;
     c = sigCaracter();
 
     //Comentarios de una linea
@@ -100,12 +138,16 @@ void comentarios() {
 
         //Comentarios de bloque * o +
     } else if (c == '*' || c == '+') {
-        int x = 1, l = 0;
-        char t = c;
+        int x = 1, l = 0; //Flag y nivel de anidamiento
+        char t = c; //Tipo de comentario
         while (x != 0) {
+
             c = sigCaracter();
+
             if (c == t) { //Si encontramos un * o + comprobamos si se esta cerrando el comentario
+
                 c = sigCaracter();
+
                 if (c == '/') { //Si se cierra comprobamos que sea el nivel de anidamiento 0
                     if (l == 0) {
                         e = 1;
@@ -114,11 +156,13 @@ void comentarios() {
                     } else { //Si no es el 0 reducimos un nivel
                         l--;
                     }
-
                 }
+
                 //Si encontramos /+ se anida un comentario
             } else if (c == '/') {
+
                 c = sigCaracter();
+
                 if (c == '+') {
                     l++; //Aumentamos nivel de anidamiento
                 }
@@ -126,6 +170,29 @@ void comentarios() {
         }
 
     } else {
+        comp->string[strlen(comp->string)] = p;
         e = 0;
     }
+} //Funcion para reconocer comentarios
+
+void comillas() { //Funcion para cadenas entre comillas
+
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
+
+    while (c != '"') {
+        if (c == '\\') {
+            comp->string[strlen(comp->string)] = c;
+            c = sigCaracter();
+            comp->string[strlen(comp->string)] = c;
+            c = sigCaracter();
+        }
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+    }
+
+
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
+    e = 0;
 }

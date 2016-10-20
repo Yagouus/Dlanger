@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sistEntrada.h"
 
 
@@ -11,7 +12,7 @@ char * puntero; //Puntero al caracter actual
 
 void Load() { //Funcion de inicializacion
 
-    buffer = (char *) malloc(TAM * sizeof (char *));
+    buffer = (char *) malloc(TAM + 1 * sizeof (char *));
 
     //Tratamos de abrir el fichero
     if ((f = fopen("regression.d", "r")) == NULL) {
@@ -23,6 +24,8 @@ void Load() { //Funcion de inicializacion
     if (fread(buffer, TAM, 1, f) != 1) {
         error("Error cargando el archivo en memoria");
     }
+    
+    strcat(buffer, "\0");
     
     //Apuntamos al comienzo del fichero
     puntero = buffer;
