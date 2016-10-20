@@ -9,5 +9,9 @@ void Load();
 //Caracter siguiente
 char sigCaracter();
 
+//Retroceder un caracter
+void retroceder();
+
 //Liberacion de memoria
 void Close();
+

@@ -15,7 +15,7 @@ compLex* sigCompLex() {
 
     int e = 1;
 
-    char c; 
+    char c;
     c = sigCaracter();
     while (c) {
 
@@ -24,16 +24,20 @@ compLex* sigCompLex() {
         switch (e) {
 
                 //Cadenas alfanuméricas
-            case 1:                
+            case 1:
                 if (isalnum(c)) {
                     e = 2;
                 } else if (isdigit(c)) {
                     e = 3;
-                } else if (&c == ".") {
+                } else if (c == ' ') {
+                    c = sigCaracter();
+                } else if (c == '.') {
                     comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
                     e = 0;
-                } else if (&c == ";") {
+                } else if (c == ';') {
                     comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
                     e = 0;
                 } else {
                     return comp;
@@ -44,7 +48,7 @@ compLex* sigCompLex() {
             case 2:
                 if (isalnum(c)) {
                     //printf("%c", c);
-                    comp->string[strlen(comp->string)] = c;    
+                    comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
                 } else {
                     e = 0;
@@ -58,6 +62,7 @@ compLex* sigCompLex() {
 
                 //Estado de aceptacion
             case 0:
+                retroceder();
                 return comp;
                 break;
 

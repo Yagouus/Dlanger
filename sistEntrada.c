@@ -43,3 +43,7 @@ void Close() { //Funcion de liberacion de memoria
     free(buffer);
 }
 
+void retroceder(){
+    puntero--;
+}
+
