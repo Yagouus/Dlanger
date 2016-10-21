@@ -25,8 +25,10 @@ compLex* sigCompLex() {
             case 1:
                 if (isalpha(c) || c == '_') { //Cadenas alfanumericas
                     e = 2;
-                } else if (isdigit(c)) { //Numeros
+                } else if (isdigit(c) && c != '0') { //Numeros
                     e = 3;
+                } else if (c == '0') {
+                    e = 8;
                 } else if (c == '.') {
                     comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
@@ -90,6 +92,10 @@ compLex* sigCompLex() {
                 //Cadenas entre " "
             case 7:
                 comillas();
+                break;
+
+            case 8:
+                binarios();
                 break;
 
                 //Estado de aceptacion
@@ -193,17 +199,20 @@ void comillas() { //Funcion para cadenas entre comillas
     e = 0;
 }
 
-void numeros() {
+void numeros() { //Numeros enteros y reales
+
+    int f = 0, x = 1;
 
     if (isdigit(c)) {
 
-        int f = 0, x = 1;
-
         while (x != 0) {
 
+            //Enteros
             if (isdigit(c)) {
                 comp->string[strlen(comp->string)] = c;
                 c = sigCaracter();
+
+                //Reales
             } else if (c == '.') {
                 if (f == 0) {
                     comp->string[strlen(comp->string)] = c;
@@ -225,4 +234,24 @@ void numeros() {
         e = 0;
     }
 
+}
+
+void binarios() {
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
+
+    if (c == 'b' || 'B') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+
+        while ((isdigit(c))) {
+            comp->string[strlen(comp->string)] = c;
+            c = sigCaracter();
+        }
+
+    } else {
+        e = 0;
+    }
+    
+    e = 0;
 }
