@@ -19,21 +19,20 @@ compLex* sigCompLex() {
     c = sigCaracter();
 
     while (c) {
+
+        //printf("%c", c);
+
         switch (e) {
 
                 //Primer caracter que leemos
             case 1:
-                if (isalpha(c) || c == '_') { //Cadenas alfanumericas
+                if (isalnum(c) || c == '_') { //Cadenas alfanumericas
                     e = 2;
                 } else if (isdigit(c)) { //Numeros
                     e = 3;
-                } else if (c == '.') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    e = 3;
                 } else if (c == ' ' || c == '\n') {
                     c = sigCaracter();
-                } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}') {
+                } else if (c == '.' || c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}') {
                     comp->string[strlen(comp->string)] = c;
                     c = sigCaracter();
                     e = 0;
@@ -59,7 +58,8 @@ compLex* sigCompLex() {
 
                 //Numeros
             case 3:
-                numeros();
+                //numeros();
+                return comp;
                 break;
 
                 //Comentarios
@@ -96,17 +96,19 @@ compLex* sigCompLex() {
             case 0:
                 retroceder(); //"Devolvemos" un caracter           
                 return comp; //Devolvemos el componente al anaSintactico
-                free(comp->string); //Liberamos memoria
-                free(comp);
                 break;
 
         }
+
+        //c=sigCaracter();
+
+
     }
 
 
 }
 
-void alfanum() { //Funcion para cadenas alfanumericas
+void alfanum() {
     if (isalnum(c)) {
         //printf("%c", c);
         comp->string[strlen(comp->string)] = c;
@@ -117,9 +119,9 @@ void alfanum() { //Funcion para cadenas alfanumericas
     } else {
         e = 0;
     }
-}
+} //Funcion para cadenas alfanumericas
 
-void comentarios() { //Funcion para reconocer comentarios
+void comentarios() {
 
     char p = c;
     c = sigCaracter();
@@ -169,7 +171,7 @@ void comentarios() { //Funcion para reconocer comentarios
         comp->string[strlen(comp->string)] = p;
         e = 0;
     }
-}
+} //Funcion para reconocer comentarios
 
 void comillas() { //Funcion para cadenas entre comillas
 
@@ -191,38 +193,4 @@ void comillas() { //Funcion para cadenas entre comillas
     comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
     e = 0;
-}
-
-void numeros() {
-
-    if (isdigit(c)) {
-
-        int f = 0, x = 1;
-
-        while (x != 0) {
-
-            if (isdigit(c)) {
-                comp->string[strlen(comp->string)] = c;
-                c = sigCaracter();
-            } else if (c == '.') {
-                if (f == 0) {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    f++;
-                } else {
-                    x = 0;
-                }
-            } else {
-                x = 0;
-            }
-
-
-        }
-
-        e = 0;
-
-    } else {
-        e = 0;
-    }
-
 }

@@ -7,15 +7,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/anaLexico.h</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/definiciones.h</file>
-            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/gestErrores.h</file>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/tablaSimbolos.h</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/main.c</file>
-            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/sistEntrada.c</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/sistEntrada.h</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/anaSintactico.h</file>
-            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/definiciones.c</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/anaLexico.c</file>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/tablaSimbolos.c</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/anaSintactico.c</file>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/gestErrores.h</file>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/sistEntrada.c</file>
+            <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/definiciones.c</file>
             <file>file:/home/yagouus/Dropbox/USC/4.Cuarto/1Cuatri/Compiladores/Practicas/P1/Practica1/gestErrores.c</file>
         </group>
     </open-files>
