@@ -1,7 +1,4 @@
-typedef struct {
-    int id;
-    char* string;
-} compLex;
+#include "tablaSimbolos.h"
 
 compLex * sigCompLex();
 

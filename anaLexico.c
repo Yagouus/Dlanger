@@ -14,7 +14,7 @@ compLex* sigCompLex() {
 
     //Inicializamos valores
     comp = (compLex *) malloc(sizeof (compLex));
-    comp->string = (char *) malloc(64);
+    comp->string = (char *) malloc(64); //OJO CAMBIAR TAMAÑO DEL MALLOC
     e = 1;
     c = sigCaracter();
 
@@ -23,35 +23,7 @@ compLex* sigCompLex() {
 
                 //Primer caracter que leemos
             case 1:
-                if (isalpha(c) || c == '_') { //Cadenas alfanumericas
-                    e = 2;
-                } else if (isdigit(c) && c != '0') { //Numeros
-                    e = 3;
-                } else if (c == '0') {
-                    e = 8;
-                } else if (c == '.') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    e = 3;
-                } else if (c == ' ' || c == '\n') {
-                    c = sigCaracter();
-                } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    e = 0;
-                } else if (c == '/') {
-                    e = 4;
-                } else if (c == '=') {
-                    e = 5;
-                } else if (c == '+') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                    e = 6;
-                } else if (c == '"') {
-                    e = 7;
-                } else {
-                    return comp;
-                }
+                einicial();
                 break;
 
                 //Cadenas alfanumericas
@@ -71,22 +43,12 @@ compLex* sigCompLex() {
 
                 // == 
             case 5:
-                if (c == '=') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                } else {
-                    e = 0;
-                }
+                igualigual();
                 break;
 
                 // +=
             case 6:
-                if (c == '=') {
-                    comp->string[strlen(comp->string)] = c;
-                    c = sigCaracter();
-                } else {
-                    e = 0;
-                }
+                masigualmasmas();
                 break;
 
                 //Cadenas entre " "
@@ -113,8 +75,8 @@ compLex* sigCompLex() {
 }
 
 void alfanum() { //Funcion para cadenas alfanumericas
+    //Seran palabras reservadas o identificadores
     if (isalnum(c)) {
-        //printf("%c", c);
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     } else if (c == '_') { //Pueden contener _
@@ -122,6 +84,7 @@ void alfanum() { //Funcion para cadenas alfanumericas
         c = sigCaracter();
     } else {
         e = 0;
+        registrarTabla(comp);
     }
 }
 
@@ -146,7 +109,7 @@ void comentarios() { //Funcion para reconocer comentarios
 
             c = sigCaracter();
 
-            if (c == t) { //Si encontramos un * o + comprobamos si se esta cerrando el comentario
+            if (c == t) { //Si encontramos un * o + comprobaremos si se esta cerrando el comentario
 
                 c = sigCaracter();
 
@@ -201,14 +164,14 @@ void comillas() { //Funcion para cadenas entre comillas
 
 void numeros() { //Numeros enteros y reales
 
-    int f = 0, x = 1;
+    int f = 0, x = 1, k = 0;
 
     if (isdigit(c)) {
 
         while (x != 0) {
 
             //Enteros
-            if (isdigit(c)) {
+            if (isdigit(c) || c == '_') {
                 comp->string[strlen(comp->string)] = c;
                 c = sigCaracter();
 
@@ -221,11 +184,30 @@ void numeros() { //Numeros enteros y reales
                 } else {
                     x = 0;
                 }
+
+                //Notacion cientifica
+            } else if (c == 'e') {
+
+                comp->string[strlen(comp->string)] = c;
+                c = sigCaracter();
+
+                //Despues de la e tiene que haber un + o un -
+                if (c == '+' || c == '-') {
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
+
+                    //Tras el signo hay un numero escrito en notación normal, lo analizamos
+                    numeros();
+
+                } else {
+                    x = 0;
+                }
+
+                x = 0;
+
             } else {
                 x = 0;
             }
-
-
         }
 
         e = 0;
@@ -237,21 +219,108 @@ void numeros() { //Numeros enteros y reales
 }
 
 void binarios() {
+
+    //Añadimos el 0
     comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
-    if (c == 'b' || 'B') {
+    //Comprobamos que sea binario
+    if (c == 'b' || c == 'B') {
+
+        //Añadimos la b
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
+        //Añadimos todos los numeros
         while ((isdigit(c))) {
             comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
         }
 
+        //Si solo es un 0 lo devovemos
     } else {
         e = 0;
     }
-    
+
+    //Aceptamos
     e = 0;
+}
+
+void masigualmasmas() { //Reconoce las cadenas += y ++
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
+
+    //Masigual
+    if (c == '=') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+        e = 0;
+
+        //Masmas
+    } else if (c == '+') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+        e = 0;
+
+    } else {
+        e = 0;
+    }
+}
+
+void igualigual() {
+    if (c == '=') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+    } else {
+        e = 0;
+    }
+
+}
+
+void einicial() { //Funcion que redirige a los demas automatas
+    if (isalpha(c) || c == '_') { //Cadenas alfanumericas
+        e = 2;
+    } else if (isdigit(c) && c != '0') { //Numeros
+        e = 3;
+    } else if (c == '0') {
+        e = 8;
+    }/*else if (c == '.') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+        e = 3;
+    }*/
+        //El espacio y salto de linea los ignoramos
+    else if (c == ' ' || c == '\n') {
+        c = sigCaracter();
+        
+        //Caracteres simples
+    } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}' || c == '.') {
+        comp->string[strlen(comp->string)] = c; //Asignamos el lexema
+        comp->id = (int) c; //Asignamos el codigo ascii
+        c = sigCaracter();
+        e = 0;
+        
+        //Posibles comentarios
+    } else if (c == '/') {
+        e = 4;
+        
+        //Expresiones con igual
+    } else if (c == '=') {
+        e = 5;
+        
+        //Expresiones con +
+    } else if (c == '+') {
+        e = 6;
+        
+        //Posibles cadenas entre comillas
+    } else if (c == '"') {
+        e = 7;
+    } else {
+        return comp;
+    }
+}
+
+//Funcion que registra un ID en la tabla de simbolos
+void registrarTabla(){
+    
 }

@@ -15,7 +15,6 @@
 #define ID 313
 
 //Tipos de dato
-#define DOUBLE 314
-#define INT 315
+#define FLOAT 314
+#define INTEGER 315
 #define VOID 316
-

@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sistEntrada.h"
-#include "anaSintactico.h"
 #include "anaLexico.h"
+#include "anaSintactico.h"
+
 
 int main(int argc, char** argv) {
     
-    //Inicializamos tabla de simbolos
+    //Creamos e inicializamos tabla de simbolos
+    crea();
+    inicializa();
     
     //Cargamos el fichero
     Load();
