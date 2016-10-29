@@ -12,7 +12,7 @@ void crea() {
 
 void destruye() {
     destruye(tabla->izq);
-    destruye(tabla->izq);
+    destruye(tabla->der);
     free(tabla);
     tabla = NULL;
 }
@@ -32,7 +32,7 @@ void inserta(arbol* A, compLex* comp) {
     } else
         inserta(&(*A)->der, comp);
     
-    printf("%s: %d \n", (*A)->lexema->string, (*A)->lexema->id);
+    //printf("%s: %d \n", (*A)->lexema->string, (*A)->lexema->id);
 }
 
 compLex* busca(arbol A, compLex *comp) {
@@ -54,8 +54,18 @@ arbol der(arbol A) {
     return A->der;
 }
 
+void imprimeElemento(arbol* A){
+    if (*A != NULL) {
+        imprimeElemento(&(*A)->izq);
+        imprimeElemento(&(*A)->der);
+        printf("<%d><%s>\n", (*A)->lexema->id, (*A)->lexema->string);
+    }
+
+}
+
 void inicializa() {
     insertarPalReservada("IMPORT", 300);
+    insertarPalReservada("WHILE", 301);
 }
 
 int buscarEnTabla(compLex* comp) {
@@ -85,3 +95,10 @@ void insertarPalReservada(char* lexema, int id) {
 
     insertarEnTabla(comp);
 }
+
+void imprime(){
+    printf("\n/////TABLA DE SIMBOLOS/////\n");
+    imprimeElemento(&tabla);
+    printf("///////////////////////////\n\n");
+}
+

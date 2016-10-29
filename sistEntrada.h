@@ -1,6 +1,6 @@
 #include "gestErrores.h"
 
-#define TAM 2048
+#define TAM 1024
 
 
 //Carga de datos

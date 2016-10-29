@@ -1,6 +1,6 @@
 //Funciones
 #define IMPORT 300
-#define WHILE 302
+#define WHILE 301
 #define FOREACH 303
 #define RETURN 304
 #define CAST 306

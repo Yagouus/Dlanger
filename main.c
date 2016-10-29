@@ -10,12 +10,14 @@ int main(int argc, char** argv) {
     //Creamos e inicializamos tabla de simbolos
     crea();
     inicializa();
+    imprime();
     
     //Cargamos el fichero
     Load();
     
     //Lanzamos en analizador sintactico
     analisisSintactico();
+    
     
     //Liberamos memoria
     Close();
