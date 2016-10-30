@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+
 #include "sistEntrada.h"
 #include "anaLexico.h"
 
