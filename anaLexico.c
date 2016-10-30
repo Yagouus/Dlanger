@@ -17,6 +17,8 @@ compLex* sigCompLex() {
     comp->string = (char *) malloc(64); //OJO CAMBIAR TAMAÑO DEL MALLOC
     e = 1;
     c = sigCaracter();
+    
+    int i = 0;
 
     while (c) {
         switch (e) {
@@ -69,6 +71,7 @@ compLex* sigCompLex() {
                 break;
 
         }
+        i++;
     }
 
 

@@ -37,7 +37,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/anaLexico.o \
 	${OBJECTDIR}/anaSintactico.o \
-	${OBJECTDIR}/definiciones.o \
 	${OBJECTDIR}/gestErrores.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/sistEntrada.o \
@@ -77,11 +76,6 @@ ${OBJECTDIR}/anaSintactico.o: anaSintactico.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/anaSintactico.o anaSintactico.c
-
-${OBJECTDIR}/definiciones.o: definiciones.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/definiciones.o definiciones.c
 
 ${OBJECTDIR}/gestErrores.o: gestErrores.c 
 	${MKDIR} -p ${OBJECTDIR}

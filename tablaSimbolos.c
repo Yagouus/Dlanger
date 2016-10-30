@@ -6,22 +6,26 @@
 
 arbol tabla;
 
-void crea() {
-    tabla = NULL;
+////FUNCIONES DE UN ARBOL////
+
+void crea(arbol *A) { //Crea un arbol
+    *A = NULL;
 }
 
-void destruye() {
-    destruye(tabla->izq);
-    destruye(tabla->der);
-    free(tabla);
-    tabla = NULL;
+void destruye(arbol *A) { //Destruye un arbol
+    if (*A != NULL) {
+        destruye(&(*A)->izq);
+        destruye(&(*A)->der);
+        free(*A);
+        *A = NULL;
+    }
 }
 
-unsigned esVacio(arbol A) {
+unsigned esVacio(arbol A) { //Comprueba si el arbol esta vacio
     return A == NULL;
 }
 
-void inserta(arbol* A, compLex* comp) {
+void inserta(arbol* A, compLex* comp) { //Inserta un elemento en el arbol
     if (esVacio(*A)) {
         *A = (arbol) malloc(sizeof (struct nodo));
         (*A)->lexema = comp;
@@ -31,11 +35,9 @@ void inserta(arbol* A, compLex* comp) {
         inserta(&(*A)->izq, comp);
     } else
         inserta(&(*A)->der, comp);
-    
-    //printf("%s: %d \n", (*A)->lexema->string, (*A)->lexema->id);
 }
 
-compLex* busca(arbol A, compLex *comp) {
+compLex* busca(arbol A, compLex *comp) { //Busca un elemento en el arbol
     if (esVacio(A))
         printf("Clave inexistente\n");
     else if (strcmp(comp->string, A->lexema->string) == 0)
@@ -46,15 +48,17 @@ compLex* busca(arbol A, compLex *comp) {
         busca(der(A), comp);
 }
 
-arbol izq(arbol A) {
+arbol izq(arbol A) { //Devuelve el nodo izq
     return A->izq;
 }
 
-arbol der(arbol A) {
+arbol der(arbol A) { //Devuelve el nodo dcho
     return A->der;
 }
 
-void imprimeElemento(arbol* A){
+void imprimeElemento(arbol* A) { //Imprime un elemento del arbol
+
+    //Se recorre el arbol inorden y se imprimen todos los elementos
     if (*A != NULL) {
         imprimeElemento(&(*A)->izq);
         imprimeElemento(&(*A)->der);
@@ -63,12 +67,39 @@ void imprimeElemento(arbol* A){
 
 }
 
-void inicializa() {
-    insertarPalReservada("IMPORT", 300);
-    insertarPalReservada("WHILE", 301);
+
+////FUNCIONES TABLA DE SIMBOLOS////
+
+void crearTabla() { //Crea la tabla de simbolos
+    crea(&tabla);
 }
 
-int buscarEnTabla(compLex* comp) {
+void destruyeTabla() { //Destruye la tabla de simbolos
+    destruye(&tabla);
+}
+
+void inicializa() { //Inicializa la tabla de simbolos
+
+    //Funciones
+    insertarPalReservada("IMPORT", IMPORT);
+    insertarPalReservada("WHILE", WHILE);
+    insertarPalReservada("FOREACH", FOREACH);
+    insertarPalReservada("RETURN", RETURN);
+    insertarPalReservada("CAST", CAST);
+    insertarPalReservada("WRITEFLN", WRITEFLN);
+
+    //Tipos de dato
+    insertarPalReservada("INT", INT);
+    insertarPalReservada("DOUBLE", DOUBLE);
+    insertarPalReservada("VOID", VOID);
+
+    //Identificadores
+    insertarPalReservada("ID", ID);
+
+
+}
+
+int buscarEnTabla(compLex* comp) { //Busca un componente en la tabla de simbolos
     if (busca(tabla, comp) == NULL) {
         return NULL;
     } else {
@@ -76,11 +107,11 @@ int buscarEnTabla(compLex* comp) {
     };
 }
 
-int insertarEnTabla(compLex* comp) {
+int insertarEnTabla(compLex* comp) { //Inserta un componente en la tabla de simbolos
     inserta(&tabla, comp);
 }
 
-void insertarPalReservada(char* lexema, int id) {
+void insertarPalReservada(char* lexema, int id) { //Inserta un componente léxico a partir de un lexema y un identificador
 
     //Definimos el componente lexico
     compLex* comp;
@@ -96,7 +127,7 @@ void insertarPalReservada(char* lexema, int id) {
     insertarEnTabla(comp);
 }
 
-void imprime(){
+void imprimeTabla() { //Imprime el contenido de la tabla
     printf("\n/////TABLA DE SIMBOLOS/////\n");
     imprimeElemento(&tabla);
     printf("///////////////////////////\n\n");

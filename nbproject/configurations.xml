@@ -20,7 +20,6 @@
                    projectFiles="true">
       <itemPath>anaLexico.c</itemPath>
       <itemPath>anaSintactico.c</itemPath>
-      <itemPath>definiciones.c</itemPath>
       <itemPath>gestErrores.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>sistEntrada.c</itemPath>
@@ -55,8 +54,6 @@
       <item path="anaSintactico.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="anaSintactico.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="definiciones.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="definiciones.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -102,8 +99,6 @@
       <item path="anaSintactico.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="anaSintactico.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="definiciones.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="definiciones.h" ex="false" tool="3" flavor2="0">
       </item>

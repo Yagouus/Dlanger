@@ -10,7 +10,7 @@ char * buffer; //Buffer en el que se guarda el fichero
 char * puntero; //Puntero al caracter actual
 
 
-void Load() { //Funcion de inicializacion
+void load() { //Funcion de inicializacion
 
     buffer = (char *) malloc(TAM + 1 * sizeof (char *));
 
@@ -41,7 +41,7 @@ char sigCaracter() { //Devuelve caracter a caracter
     return NULL;
 }
 
-void Close() { //Funcion de liberacion de memoria
+void close() { //Funcion de liberacion de memoria
     fclose(f);
     free(buffer);
 }

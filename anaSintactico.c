@@ -8,7 +8,7 @@ void analisisSintactico(){
     compLex* comp = sigCompLex();
     
     //Iteramos por todos los componentes
-    while(comp->string){
+    while(comp){
         
         //Imprimimos el lexema e id
         printf("<%d> <%s>\n", comp->id, comp->string);

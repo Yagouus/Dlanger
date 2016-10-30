@@ -7,20 +7,22 @@
 
 int main(int argc, char** argv) {
     
-    //Creamos e inicializamos tabla de simbolos
-    crea();
+    //Creamos, inicializamos y mostramos la tabla de simbolos
+    crearTabla();
     inicializa();
-    imprime();
+    imprimeTabla();
     
-    //Cargamos el fichero
-    Load();
+    //Cargamos el fichero a compilar
+    load();
     
     //Lanzamos en analizador sintactico
     analisisSintactico();
     
-    
+    //Volvemos a imprimir
+    imprimeTabla();
     //Liberamos memoria
-    Close();
+    destruyeTabla();
+    close();
     
 
 

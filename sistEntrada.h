@@ -1,10 +1,10 @@
 #include "gestErrores.h"
 
-#define TAM 1024
+#define TAM 2048
 
 
 //Carga de datos
-void Load();
+void load();
 
 //Caracter siguiente
 char sigCaracter();
@@ -13,5 +13,5 @@ char sigCaracter();
 void retroceder();
 
 //Liberacion de memoria
-void Close();
+void close();
 
