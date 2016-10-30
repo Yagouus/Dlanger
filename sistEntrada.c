@@ -38,7 +38,6 @@ char sigCaracter() { //Devuelve caracter a caracter
         return *(puntero++);        
     }
     
-    return NULL;
 }
 
 void close() { //Funcion de liberacion de memoria

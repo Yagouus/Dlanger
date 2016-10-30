@@ -320,7 +320,7 @@ void einicial() { //Funcion que redirige a los demas automatas
     } else if (c == '"') {
         e = 7;
     } else {
-        return comp;
+        e = 0;
     }
 }
 

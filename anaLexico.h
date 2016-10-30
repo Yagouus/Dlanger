@@ -1,8 +1,12 @@
 #include "tablaSimbolos.h"
 
+//Devuelve un lexema
 compLex * sigCompLex();
 
-//Definicion de funciones
+//Registra una cadena en la tabla de simbolos
+void registrarTabla();
+
+//Autómatas
 void alfanum();
 void einicial();
 void numeros();

@@ -102,14 +102,12 @@ void inicializa() { //Inicializa la tabla de simbolos
 }
 
 int buscarEnTabla(compLex* comp) { //Busca un componente en la tabla de simbolos
-    if (busca(tabla, comp) == NULL) {
-        return NULL;
-    } else {
+    if (busca(tabla, comp) != NULL) {
         return 1;
     };
 }
 
-int insertarEnTabla(compLex* comp) { //Inserta un componente en la tabla de simbolos
+void insertarEnTabla(compLex* comp) { //Inserta un componente en la tabla de simbolos
     inserta(&tabla, comp);
 }
 

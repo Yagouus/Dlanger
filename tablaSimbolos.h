@@ -17,6 +17,11 @@ void inserta(arbol* A, compLex* comp);
 compLex* busca(arbol A, compLex *comp);
 arbol izq();
 arbol der();
+void crearTabla();
+void destruyeTabla();
 void inicializa();
-
+int buscarEnTabla(compLex* comp);
+void insertarEnTabla(compLex* comp);
+void insertarPalReservada(char* lexema, int id);
+void imprimeTabla();
 

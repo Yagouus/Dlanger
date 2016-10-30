@@ -1,1 +1,1 @@
-void analisis();
+void analisisSintactico();
