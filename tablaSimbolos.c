@@ -41,7 +41,7 @@ void inserta(arbol* A, compLex* comp) { //Inserta un elemento en el arbol
 
 compLex* busca(arbol A, compLex *comp) { //Busca un elemento en el arbol
     if (esVacio(A))
-        printf("Clave inexistente\n");
+        return NULL;
     else if (strcmp(comp->string, A->lexema->string) == 0)
         return A->lexema;
     else if (strcmp(comp->string, A->lexema->string) < 0)

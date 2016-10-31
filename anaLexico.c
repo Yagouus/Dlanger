@@ -67,8 +67,9 @@ compLex* sigCompLex() {
             case 0:
                 retroceder(); //"Devolvemos" un caracter           
                 return comp; //Devolvemos el componente al anaSintactico
-                free(comp->string); //Liberamos memoria
-                free(comp);
+                e=1;
+                //free(comp->string); //Liberamos memoria
+                //free(comp);
                 break;
 
         }
@@ -87,8 +88,8 @@ void alfanum() { //Funcion para cadenas alfanumericas
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     } else {
-        e = 0;
-        registrarTabla(comp);
+        registrarTabla();
+        e = 0;        
     }
 }
 
@@ -326,5 +327,7 @@ void einicial() { //Funcion que redirige a los demas automatas
 
 //Funcion que registra un ID en la tabla de simbolos
 void registrarTabla(){
-    
+    if(buscarEnTabla(comp) != 1){
+        insertarEnTabla(comp);
+    }
 }
