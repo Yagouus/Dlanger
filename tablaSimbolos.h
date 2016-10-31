@@ -1,3 +1,5 @@
+#include "definiciones.h"
+
 //Estructura de un componente lexico
 //Contiene un id
 //Y el lexema en si

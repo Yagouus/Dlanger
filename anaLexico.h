@@ -1,5 +1,5 @@
 #include "tablaSimbolos.h"
-
+#include "sistEntrada.h"
 //Devuelve un lexema
 compLex * sigCompLex();
 

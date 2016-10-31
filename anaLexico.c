@@ -2,8 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "definiciones.h"
-#include "sistEntrada.h"
 #include "anaLexico.h"
 
 //Variables
@@ -14,17 +12,21 @@ compLex* comp;
 compLex* sigCompLex() {
 
     //Inicializamos valores
+
+    //Componente lexico
     comp = (compLex *) malloc(sizeof (compLex));
     comp->string = (char *) malloc(64); //OJO CAMBIAR TAMAÑO DEL MALLOC
-    e = 1;
-    c = sigCaracter();
 
-    int i = 0;
+    //Estado
+    e = 1;
+
+    //Pedimos el siguiente caracter
+    c = sigCaracter();
 
     while (c) {
         switch (e) {
 
-                //Primer caracter que leemos
+                //Estado inicial
             case 1:
                 einicial();
                 break;
@@ -49,7 +51,7 @@ compLex* sigCompLex() {
                 igualigual();
                 break;
 
-                // +=
+                // += o ==
             case 6:
                 masigualmasmas();
                 break;
@@ -59,32 +61,71 @@ compLex* sigCompLex() {
                 comillas();
                 break;
 
-            case 8:
-                binarios();
-                break;
-
                 //Estado de aceptacion
             case 0:
                 retroceder(); //"Devolvemos" un caracter           
                 return comp; //Devolvemos el componente al anaSintactico
-                e = 1;
-                //free(comp->string); //Liberamos memoria
-                //free(comp);
                 break;
 
         }
-        i++;
     }
 
 
 }
 
-void alfanum() { //Funcion para cadenas alfanumericas palabras reservadas o IDs
+////AUTOMATA////
 
+void einicial() { //Estado inicial
+
+    //Cadenas alfanumericas
+    if (isalpha(c) || c == '_') {
+        e = 2;
+
+        //Numeros
+    } else if (isdigit(c)) {
+        e = 3;
+
+        //Comentarios
+    } else if (c == '/') {
+        e = 4;
+
+        //Expresiones con =
+    } else if (c == '=') {
+        e = 5;
+
+        //Expresiones con +
+    } else if (c == '+') {
+        e = 6;
+        //Cadenas entre comillas
+    } else if (c == '"') {
+        e = 7;
+
+        //Caracteres simples
+    } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}' || c == '.') {
+        comp->string[strlen(comp->string)] = c; //Asignamos el lexema
+        comp->id = (int) c; //Asignamos el codigo ascii
+        c = sigCaracter();
+        e = 0;
+
+        // ' ' y '\n' se ignoran
+    } else if (c == ' ' || c == '\n') {
+        c = sigCaracter();
+
+        //Estado de aceptacion
+    } else {
+        e = 0;
+    }
+}
+
+void alfanum() { //Funcion para cadenas alfanumericas
+
+    //Puede contener caracteres alfanumericos o _
     if (isalnum(c) || c == '_') {
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
+
     } else {
+        //Tratamos de registrar la cadena en la TS
         registrarTabla();
         e = 0;
     }
@@ -98,9 +139,12 @@ void comentarios() { //Funcion para reconocer comentarios
 
     //Comentarios de una linea
     if (c == '/') {
+
+        //Añadimos hasta encontrar salto de linea
         while (c != '\n') {
             c = sigCaracter();
         }
+
         c = sigCaracter();
         e = 1;
 
@@ -128,15 +172,14 @@ void comentarios() { //Funcion para reconocer comentarios
 
                 //Si encontramos /+ se anida un comentario
             } else if (c == '/') {
-
                 c = sigCaracter();
-
                 if (c == '+') {
                     l++; //Aumentamos nivel de anidamiento
                 }
             }
         }
 
+        //Si solo es una / asignamos el tipo de lexema
     } else {
         comp->id = (int) '/';
         e = 0;
@@ -151,7 +194,7 @@ void comillas() { //Funcion para cadenas entre comillas
 
     //Hasta que encontremos las " de cierre
     while (c != '"') {
-        
+
         //Si encontramos una barra de escape
         //Añadimos la barra y el caracter siguiente indistintamente
         if (c == '\\') {
@@ -160,16 +203,18 @@ void comillas() { //Funcion para cadenas entre comillas
             comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
         }
+
+        //Añadimos el caracter
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     }
 
     //Añadimos " de cierre
     comp->string[strlen(comp->string)] = c;
-    
+
     //Asignamos tipo de lexema
     comp->id = T_CADENA;
-    
+
     //Aceptamos
     c = sigCaracter();
     e = 0;
@@ -212,20 +257,20 @@ void numeros() { //Numeros enteros y reales
 
 }
 
-void enteros() {
+void enteros() { //Reconoce numeros enteros sin signo
 
+    //Pueden ser numeros o _ 
     while (isdigit(c) || c == '_') {
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     }
 
+    //Asignamos el tipo de lexema
     comp->id = T_INTEGER;
 
 }
 
-void reales() {
-
-    int f = 0, x = 1, k = 0;
+void reales() { //Reconoce numeros de punto flotante
 
     //Añadimos el .
     comp->string[strlen(comp->string)] = c;
@@ -234,6 +279,7 @@ void reales() {
     //Añadimos los numeros que siguen al punto
     enteros();
 
+    //Asignamos el tipo de lexema
     comp->id = T_FLOAT;
 }
 
@@ -250,20 +296,16 @@ void binarios() {
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
-        //Añadimos todos los numeros
+        //Añadimos los numeros que siguen
         while (c == '1' || c == '0') {
             comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
-        }
 
-        //Si solo es un 0 lo devovemos
-    } else {
-        e = 0;
+        }
     }
 
-    //Aceptamos
+    //Asignamos el tipo de lexema
     comp->id = T_INTEGER;
-    e = 0;
 }
 
 void nCientifica() {
@@ -282,7 +324,6 @@ void nCientifica() {
 
         //Aceptamos
         comp->id = T_FLOAT;
-        e = 0;
 
         //Error, numero mal formado
     } else {
@@ -291,6 +332,8 @@ void nCientifica() {
 }
 
 void masigualmasmas() { //Reconoce las cadenas += y ++
+
+    //Añadimos el +
     comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
@@ -308,7 +351,9 @@ void masigualmasmas() { //Reconoce las cadenas += y ++
         c = sigCaracter();
         e = 0;
 
+        //Es solo un +
     } else {
+        comp->id = (int) '+';
         e = 0;
     }
 }
@@ -334,49 +379,7 @@ void igualigual() { //Comprobamos ==
 
 }
 
-void einicial() { //Funcion que redirige a los demas automatas
-    if (isalpha(c) || c == '_') { //Cadenas alfanumericas
-        e = 2;
-    } else if (isdigit(c)) { //Numeros
-        e = 3;
-    }/* else if (c == '0') {
-        e = 8;
-    }else if (c == '.') {
-        comp->string[strlen(comp->string)] = c;
-        c = sigCaracter();
-        e = 3;
-    }*/
-        //El espacio y salto de linea los ignoramos
-    else if (c == ' ' || c == '\n') {
-        c = sigCaracter();
-
-        //Caracteres simples
-    } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}' || c == '.') {
-        comp->string[strlen(comp->string)] = c; //Asignamos el lexema
-        comp->id = (int) c; //Asignamos el codigo ascii
-        c = sigCaracter();
-        e = 0;
-
-        //Posibles comentarios
-    } else if (c == '/') {
-        e = 4;
-
-        //Expresiones con igual
-    } else if (c == '=') {
-        e = 5;
-
-        //Expresiones con +
-    } else if (c == '+') {
-        e = 6;
-
-        //Posibles cadenas entre comillas
-    } else if (c == '"') {
-        e = 7;
-    } else {
-        e = 0;
-    }
-}
-
+////OTRAS FUNCIONES////
 void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
     insertaElemento(comp);
 }

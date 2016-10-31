@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #include "tablaSimbolos.h"
-#include "definiciones.h"
+
 
 arbol tabla;
 
