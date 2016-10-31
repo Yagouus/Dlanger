@@ -34,6 +34,8 @@ int -
 
 //////////////////////////////////////////7
 -Que hacer con length?
+-Que hacer con cademas ""?
+-Tipo de dato y deficincion (double, 1.9)?
 -Tamaño memoria lexema reasignar?
 -Sistema de entrada
 -Automata forma?

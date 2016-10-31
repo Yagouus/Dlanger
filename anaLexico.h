@@ -15,3 +15,4 @@ void igualigual();
 void masigualmasmas();
 void comillas();
 void binarios();
+void reales();

@@ -81,13 +81,14 @@ compLex* sigCompLex() {
 
 void alfanum() { //Funcion para cadenas alfanumericas palabras reservadas o IDs
 
-    if (isalnum(c) || c == '_') {
+    if (isalnum(c) && c == '_') {
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     } else {
         registrarTabla();
         e = 0;
     }
+    
 }
 
 void comentarios() { //Funcion para reconocer comentarios
@@ -179,6 +180,7 @@ void numeros() { //Numeros enteros y reales
 
             //Enteros
             if (isdigit(c) || c == '_') {
+
                 comp->string[strlen(comp->string)] = c;
                 c = sigCaracter();
 
@@ -188,8 +190,24 @@ void numeros() { //Numeros enteros y reales
 
                 //Notacion cientifica
             } else if (c == 'e') {
-                nCientifica();
-                
+
+                comp->string[strlen(comp->string)] = c;
+                c = sigCaracter();
+
+                //Despues de la e tiene que haber un + o un -
+                if (c == '+' || c == '-') {
+                    comp->string[strlen(comp->string)] = c;
+                    c = sigCaracter();
+
+                    //Tras el signo hay un numero escrito en notación normal, lo analizamos
+                    numeros();
+
+                } else {
+                    x = 0;
+                }
+
+                x = 0;
+
             } else {
                 x = 0;
             }
@@ -200,6 +218,10 @@ void numeros() { //Numeros enteros y reales
     } else {
         e = 0;
     }
+
+}
+
+void enteros() {
 
 }
 
@@ -220,13 +242,13 @@ void reales() {
     comp->id = T_FLOAT;
 }
 
-void binarios() {
+void binarios() { //Reconoce números binarios
 
     //Añadimos el 0
     comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
-    //Comprobamos que la siguiente letra sea b 0 B
+    //Comprobamos que sla siguiente letra sea b 0 B
     if (c == 'b' || c == 'B') {
 
         //Añadimos la b
@@ -241,39 +263,13 @@ void binarios() {
 
         //Si solo es un 0 lo devovemos
     } else {
+
         e = 0;
     }
 
     //Aceptamos
     comp->id = T_INTEGER;
     e = 0;
-}
-
-void nCientifica() {
-
-    //Añadimos la e
-    comp->string[strlen(comp->string)] = c;
-    c = sigCaracter();
-
-    //Despues de la e tiene que haber un + o un -
-    if (c == '+' || c == '-') {
-        comp->string[strlen(comp->string)] = c;
-        c = sigCaracter();
-
-        //Añadimos el resto de numeros
-        while (isdigit(c) || c == '_') {
-            comp->string[strlen(comp->string)] = c;
-            c = sigCaracter();
-        }
-
-        //Aceptamos
-        comp->id = T_FLOAT;
-        e = 0;
-
-        //Error, numero mal formado
-    } else {
-
-    }
 }
 
 void masigualmasmas() { //Reconoce las cadenas += y ++
@@ -299,7 +295,7 @@ void masigualmasmas() { //Reconoce las cadenas += y ++
     }
 }
 
-void igualigual() { //Comprobamos ==
+void igualigual() { //COmprobamos ==
     if (c == '=') {
         comp->string[strlen(comp->string)] = c;
         comp->id = IGUALIGUAL;
@@ -348,6 +344,8 @@ void einicial() { //Funcion que redirige a los demas automatas
         //Posibles cadenas entre comillas
     } else if (c == '"') {
         e = 7;
+
+        //Si no es ningun caso -> Error
     } else {
         e = 0;
     }
