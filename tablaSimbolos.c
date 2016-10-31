@@ -133,9 +133,17 @@ void imprimeTabla() { //Imprime el contenido de la tabla
     printf("///////////////////////////\n\n");
 }
 
+void asignarID(compLex* comp){
+    compLex* aux = busca(tabla, comp);
+    comp->id = aux->id;   
+   
+}
+
 void insertaElemento(compLex* comp){
     if(buscarEnTabla(comp) != 1){
         comp->id = ID;
         insertarEnTabla(comp);
+    }else{
+        asignarID(comp);
     }
 }

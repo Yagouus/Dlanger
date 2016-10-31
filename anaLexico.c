@@ -189,10 +189,11 @@ void numeros() { //Numeros enteros y reales
                 //Notacion cientifica
             } else if (c == 'e') {
                 nCientifica();
-                
+
             } else {
                 x = 0;
             }
+
         }
 
         e = 0;
@@ -300,11 +301,21 @@ void masigualmasmas() { //Reconoce las cadenas += y ++
 }
 
 void igualigual() { //Comprobamos ==
+
+    //Añadimos =
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
+
+    //Si el siguiente caracter es otro =
     if (c == '=') {
         comp->string[strlen(comp->string)] = c;
         comp->id = IGUALIGUAL;
         c = sigCaracter();
+        e = 0;
+        
+        //Si solo es 1 un =
     } else {
+        comp->id = (int) '=';
         e = 0;
     }
 
