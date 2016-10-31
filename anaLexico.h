@@ -16,3 +16,5 @@ void masigualmasmas();
 void comillas();
 void binarios();
 void reales();
+void enteros();
+void nCientifica();

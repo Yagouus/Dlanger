@@ -92,7 +92,8 @@ void alfanum() { //Funcion para cadenas alfanumericas palabras reservadas o IDs
 
 void comentarios() { //Funcion para reconocer comentarios
 
-    char p = c;
+    //Añadimos /
+    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Comentarios de una linea
@@ -137,7 +138,7 @@ void comentarios() { //Funcion para reconocer comentarios
         }
 
     } else {
-        comp->string[strlen(comp->string)] = p;
+        comp->id = (int) '/';
         e = 0;
     }
 }
@@ -179,8 +180,7 @@ void numeros() { //Numeros enteros y reales
 
             //Enteros
             if (isdigit(c) || c == '_') {
-                comp->string[strlen(comp->string)] = c;
-                c = sigCaracter();
+                enteros();
 
                 //Reales
             } else if (c == '.') {
@@ -198,9 +198,18 @@ void numeros() { //Numeros enteros y reales
 
         e = 0;
 
-    } else {
-        e = 0;
     }
+
+}
+
+void enteros() {
+
+    while (isdigit(c) || c == '_') {
+        comp->string[strlen(comp->string)] = c;
+        c = sigCaracter();
+    }
+
+    comp->id = T_INTEGER;
 
 }
 
@@ -213,10 +222,7 @@ void reales() {
     c = sigCaracter();
 
     //Añadimos los numeros que siguen al punto
-    while (isdigit(c) || c == '_') {
-        comp->string[strlen(comp->string)] = c;
-        c = sigCaracter();
-    }
+    enteros();
 
     comp->id = T_FLOAT;
 }
@@ -262,10 +268,7 @@ void nCientifica() {
         c = sigCaracter();
 
         //Añadimos el resto de numeros
-        while (isdigit(c) || c == '_') {
-            comp->string[strlen(comp->string)] = c;
-            c = sigCaracter();
-        }
+        enteros();
 
         //Aceptamos
         comp->id = T_FLOAT;
@@ -312,7 +315,7 @@ void igualigual() { //Comprobamos ==
         comp->id = IGUALIGUAL;
         c = sigCaracter();
         e = 0;
-        
+
         //Si solo es 1 un =
     } else {
         comp->id = (int) '=';
