@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
     
     //Volvemos a imprimir
     imprimeTabla();
+    
     //Liberamos memoria
     destruyeTabla();
     close();

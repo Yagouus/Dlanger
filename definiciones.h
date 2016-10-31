@@ -21,5 +21,6 @@
 //Tipos de dato
 #define T_INTEGER 330
 #define T_FLOAT 331
+#define T_CADENA 332
 
 

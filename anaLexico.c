@@ -145,10 +145,15 @@ void comentarios() { //Funcion para reconocer comentarios
 
 void comillas() { //Funcion para cadenas entre comillas
 
+    //Añadimos las " de apertura
     comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
+    //Hasta que encontremos las " de cierre
     while (c != '"') {
+        
+        //Si encontramos una barra de escape
+        //Añadimos la barra y el caracter siguiente indistintamente
         if (c == '\\') {
             comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
@@ -159,8 +164,13 @@ void comillas() { //Funcion para cadenas entre comillas
         c = sigCaracter();
     }
 
-
+    //Añadimos " de cierre
     comp->string[strlen(comp->string)] = c;
+    
+    //Asignamos tipo de lexema
+    comp->id = T_CADENA;
+    
+    //Aceptamos
     c = sigCaracter();
     e = 0;
 }
