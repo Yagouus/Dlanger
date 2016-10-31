@@ -327,7 +327,5 @@ void einicial() { //Funcion que redirige a los demas automatas
 
 //Funcion que registra un ID en la tabla de simbolos
 void registrarTabla(){
-    if(buscarEnTabla(comp) != 1){
-        insertarEnTabla(comp);
-    }
+    insertaElemento(comp);
 }

@@ -133,3 +133,9 @@ void imprimeTabla() { //Imprime el contenido de la tabla
     printf("///////////////////////////\n\n");
 }
 
+void insertaElemento(compLex* comp){
+    if(buscarEnTabla(comp) != 1){
+        comp->id = ID;
+        insertarEnTabla(comp);
+    }
+}

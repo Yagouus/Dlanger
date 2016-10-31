@@ -33,4 +33,5 @@ int buscarEnTabla(compLex* comp);
 void insertarEnTabla(compLex* comp);
 void insertarPalReservada(char* lexema, int id);
 void imprimeTabla();
+void insertaElemento(compLex* comp);
 

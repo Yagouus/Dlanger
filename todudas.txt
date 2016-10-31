@@ -1,0 +1,40 @@
+std --
+stdio --
+algorithm --
+iteration --
+exception --
+beta1 --
+x --
+y --
+x_bar --
+y_bar --
+enforce --
+length --
+num --
+denom --
+whilectr --
+xval --
+main --
+b1 --
+_0 --
+sum --
+a --
+
+writefln -
+return -
+id --
+int -
+import -
+while -
+foreach -
+cast -
+double -
+void -
+int -
+
+//////////////////////////////////////////7
+-Que hacer con length?
+-Tamaño memoria lexema reasignar?
+-Sistema de entrada
+-Automata forma?
+
