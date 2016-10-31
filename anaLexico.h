@@ -1,5 +1,7 @@
 #include "tablaSimbolos.h"
 #include "sistEntrada.h"
+#include "gestErrores.h"
+
 //Devuelve un lexema
 compLex * sigCompLex();
 

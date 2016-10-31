@@ -5,7 +5,6 @@
 
 #include "tablaSimbolos.h"
 
-
 arbol tabla;
 
 ////FUNCIONES DE UN ARBOL////
@@ -124,6 +123,7 @@ void insertarPalReservada(char* lexema, int id) { //Inserta un componente léxic
         comp->string[i] = tolower(lexema[i]);
     }
 
+    //Insertamos el componente en la tabla
     insertarEnTabla(comp);
 }
 
@@ -133,17 +133,21 @@ void imprimeTabla() { //Imprime el contenido de la tabla
     printf("///////////////////////////\n\n");
 }
 
-void asignarID(compLex* comp){
+void asignarID(compLex* comp) { //Busca un lexema en la tabla y le asigna el id correspondiente
     compLex* aux = busca(tabla, comp);
-    comp->id = aux->id;   
-   
+    comp->id = aux->id;
+
 }
 
-void insertaElemento(compLex* comp){
-    if(buscarEnTabla(comp) != 1){
-        comp->id = ID;
-        insertarEnTabla(comp);
-    }else{
+void insertaElemento(compLex* comp) { //Inserta un componente lexico en la tabla
+
+    //Si el componente no esta en la tabla es un identificador
+    if (buscarEnTabla(comp) != 1) {
+        comp->id = ID; //Se le asigna como tipo ID
+        insertarEnTabla(comp); //Se inserta en la tabla
+        
+        //Si esta en la tabla se le asigna el tipo que le corresponda
+    } else {
         asignarID(comp);
     }
 }

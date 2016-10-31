@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv) {
     
-    //Creamos, inicializamos y mostramos la tabla de simbolos
+    //Creamos, inicializamos y mostramos la TS
     crearTabla();
     inicializa();
     imprimeTabla();
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     //Lanzamos en analizador sintactico
     analisisSintactico();
     
-    //Volvemos a imprimir
+    //Volvemos a imprimir la TS
     imprimeTabla();
     
     //Liberamos memoria

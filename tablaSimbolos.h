@@ -1,19 +1,17 @@
 #include "definiciones.h"
+#include "gestErrores.h"
+
 
 //Estructura de un componente lexico
-//Contiene un id
-//Y el lexema en si
 typedef struct {
-    int id;
-    char* string;
+    int id; //Contiene un id
+    char* string; //Y el lexema en si
 } compLex;
 
 //Nodo del arbol
-//Contiene un componente lexico
-//Y punteros a sus subarboles
 struct nodo {
-    compLex* lexema;
-    struct nodo *izq, *der;
+    compLex* lexema; //Contiene un componente lexico
+    struct nodo *izq, *der; //Y punteros a sus subarboles
 };
 
 typedef struct nodo * arbol;
@@ -35,5 +33,6 @@ int buscarEnTabla(compLex* comp);
 void insertarEnTabla(compLex* comp);
 void insertarPalReservada(char* lexema, int id);
 void imprimeTabla();
+void asignarID();
 void insertaElemento(compLex* comp);
 
