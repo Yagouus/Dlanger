@@ -21,6 +21,8 @@
 //Tipos de dato
 #define T_INTEGER 330
 #define T_FLOAT 331
-#define T_CADENA 332
+#define T_BINARIO 332
+#define T_NCIENTIFICA 333
+#define T_CADENA 334
 
 

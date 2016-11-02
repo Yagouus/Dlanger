@@ -305,7 +305,7 @@ void binarios() {
     }
 
     //Asignamos el tipo de lexema
-    comp->id = T_INTEGER;
+    comp->id = T_BINARIO;
 }
 
 void nCientifica() {
@@ -315,7 +315,7 @@ void nCientifica() {
     c = sigCaracter();
 
     //Despues de la e tiene que haber un + o un -
-    if (c == '+' || c == '-') {
+    if (c == '+' || c == '-' || isdigit(c)) {
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
@@ -323,7 +323,7 @@ void nCientifica() {
         enteros();
 
         //Aceptamos
-        comp->id = T_FLOAT;
+        comp->id = T_NCIENTIFICA;
 
         //Error, numero mal formado
     } else {
@@ -382,4 +382,8 @@ void igualigual() { //Comprobamos ==
 ////OTRAS FUNCIONES////
 void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
     insertaElemento(comp);
+}
+
+void anadirCaracter() {
+
 }

@@ -32,11 +32,22 @@ double -
 void -
 int -
 
-//////////////////////////////////////////7
--Que hacer con length?
--Que hacer con cademas ""?
--Tipo de dato y deficincion (double, 1.9)?
+//////////////////////////////////////////
+DUDAS
+
+-Que hacer con length? -> Identificador
+-Tipo de dato y deficincion (double, 1.9)? -> Segun formato de numero
 -Tamaño memoria lexema reasignar?
 -Sistema de entrada
 -Automata forma?
+-Errores -> Errores de formato como vea
+
+
+//////////////////////////////////////////
+TODO
+
+-Sistema de entrada
+-Sistema de errores
+-Revisar Automata
+-Revisar IDs
 
