@@ -54,6 +54,9 @@ char* obtenerLexema(){ //Devuelve un componente lexico
         lexema[strlen(lexema)] = *inicio;
         inicio++;
     }
+    
+    //printf("%s", lexema);
+    return lexema;
 }
 
 void close() { //Funcion de liberacion de memoria
@@ -62,6 +65,6 @@ void close() { //Funcion de liberacion de memoria
 }
 
 void retroceder(){
-    puntero--;
+    final--;
 }
 

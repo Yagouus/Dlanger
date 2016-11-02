@@ -15,3 +15,5 @@ void retroceder();
 //Liberacion de memoria
 void close();
 
+char* obtenerLexema();
+void igualar();

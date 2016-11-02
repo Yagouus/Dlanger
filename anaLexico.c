@@ -65,7 +65,9 @@ compLex* sigCompLex() {
 
                 //Estado de aceptacion
             case 0:
-                retroceder(); //"Devolvemos" un caracter           
+                retroceder(); //"Devolvemos" un caracter        
+                comp->string = obtenerLexema();
+                igualar();
                 return comp; //Devolvemos el componente al anaSintactico
                 break;
 
@@ -110,7 +112,8 @@ void einicial() { //Estado inicial
         e = 0;
 
         // ' ' y '\n' se ignoran
-    } else if (c == ' ' || c == '\n') {
+    } else if (c == ' ' || c == '\n' || c == '\t') {
+        igualar();
         c = sigCaracter();
 
         //Estado de aceptacion
@@ -147,6 +150,7 @@ void comentarios() { //Funcion para reconocer comentarios
         }
 
         c = sigCaracter();
+        igualar();
         e = 1;
 
         //Comentarios de bloque * o +
@@ -164,6 +168,7 @@ void comentarios() { //Funcion para reconocer comentarios
                 if (c == '/') { //Si se cierra comprobamos que sea el nivel de anidamiento 0
                     if (l == 0) {
                         e = 1;
+                        igualar();
                         c = sigCaracter();
                         x = 0;
                     } else { //Si no es el 0 reducimos un nivel
@@ -213,7 +218,6 @@ void comillas() { //Funcion para cadenas entre comillas
 
     //Añadimos " de cierre
     comp->string[strlen(comp->string)] = c;
-    c = sigCaracter();
 
     //Asignamos tipo de lexema
     comp->id = T_CADENA;
