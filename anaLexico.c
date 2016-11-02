@@ -17,7 +17,7 @@ compLex* sigCompLex() {
 
     //Componente lexico
     comp = (compLex *) malloc(sizeof (compLex));
-    comp->string = (char *) malloc(8);
+    comp->string = (char *) malloc(64);
 
     //Estado
     e = 1;
@@ -190,9 +190,7 @@ void comentarios() { //Funcion para reconocer comentarios
 void comillas() { //Funcion para cadenas entre comillas
 
     //Añadimos las " de apertura
-    anadirCaracter();
-
-    //comp->string[strlen(comp->string)] = c;
+    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Hasta que encontremos las " de cierre
@@ -201,28 +199,23 @@ void comillas() { //Funcion para cadenas entre comillas
         //Si encontramos una barra de escape
         //Añadimos la barra y el caracter siguiente indistintamente
         if (c == '\\') {
-            //comp->string[strlen(comp->string)] = c;
-            anadirCaracter();
+            comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
 
-            //comp->string[strlen(comp->string)] = c;
-            anadirCaracter();
+            comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
         }
 
         //Añadimos el caracter
-        //comp->string[strlen(comp->string)] = c;
-        anadirCaracter();
+        comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     }
 
     //Añadimos " de cierre
-    anadirCaracter();
-    //comp->string[strlen(comp->string)] = c;
+    comp->string[strlen(comp->string)] = c;
+    c = sigCaracter();
 
     //Asignamos tipo de lexema
-    comp->string = (char*) realloc(comp->string, strlen(aux) * sizeof (char));
-    strcpy(comp->string, aux);
     comp->id = T_CADENA;
 
     //Aceptamos
@@ -403,7 +396,7 @@ void anadirCaracter() { //Funcion que añade un caracter a la cadena que se esta
         //Reservamos otro "bloque"
         aux = (char *) realloc(aux, strlen(aux) + 8);
     }*/
-    
+
     //Aumentamos el tamano
     aux = (char *) realloc(aux, strlen(aux) + 8);
 

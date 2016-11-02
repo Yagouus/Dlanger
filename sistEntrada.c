@@ -8,6 +8,8 @@
 FILE * f; //Puntero al fichero a compilar
 char * buffer; //Buffer en el que se guarda el fichero
 char * puntero; //Puntero al caracter actual
+char * inicio; //Puntero al ppio de un lexema
+char * final; //Puntero al final de un lexema
 
 
 void load() { //Funcion de inicializacion
@@ -29,15 +31,29 @@ void load() { //Funcion de inicializacion
     
     //Apuntamos al comienzo del fichero
     puntero = buffer;
+    inicio = buffer;
+    final = buffer;
 
 }
 
 char sigCaracter() { //Devuelve caracter a caracter
     
-    while(*puntero != EOF){
-        return *(puntero++);        
+    while(*final != EOF){
+        return *(final++);        
     }
     
+}
+
+void igualar(){ //Iguala el puntero inicial al final
+    inicio = final;
+}
+
+char* obtenerLexema(){ //Devuelve un componente lexico
+    char* lexema = (char*) malloc(64);
+    while(inicio != final){
+        lexema[strlen(lexema)] = *inicio;
+        inicio++;
+    }
 }
 
 void close() { //Funcion de liberacion de memoria
