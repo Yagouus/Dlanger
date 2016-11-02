@@ -20,3 +20,6 @@ void binarios();
 void reales();
 void enteros();
 void nCientifica();
+
+//Otras funciones
+void anadirCaracter();

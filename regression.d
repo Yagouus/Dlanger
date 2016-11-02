@@ -40,6 +40,7 @@ void main()
     /**/ /* Print result */ /**/
     writefln("\"Slope\": %f", b1);
     writefln("\"Intercept\": %f", _0);
+
     ///Parsing tests. Comment to compile
     a = /+ // +/ 1;
     a = /+ "+/" +/ 1";

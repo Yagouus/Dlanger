@@ -8,14 +8,16 @@
 char c;
 int e;
 compLex* comp;
+char * aux;
 
 compLex* sigCompLex() {
 
     //Inicializamos valores
+    aux = (char*) malloc(8);
 
     //Componente lexico
     comp = (compLex *) malloc(sizeof (compLex));
-    comp->string = (char *) malloc(64); //OJO CAMBIAR TAMAÑO DEL MALLOC
+    comp->string = (char *) malloc(8);
 
     //Estado
     e = 1;
@@ -134,7 +136,6 @@ void alfanum() { //Funcion para cadenas alfanumericas
 void comentarios() { //Funcion para reconocer comentarios
 
     //Añadimos /
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Comentarios de una linea
@@ -189,7 +190,9 @@ void comentarios() { //Funcion para reconocer comentarios
 void comillas() { //Funcion para cadenas entre comillas
 
     //Añadimos las " de apertura
-    comp->string[strlen(comp->string)] = c;
+    anadirCaracter();
+
+    //comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Hasta que encontremos las " de cierre
@@ -198,21 +201,28 @@ void comillas() { //Funcion para cadenas entre comillas
         //Si encontramos una barra de escape
         //Añadimos la barra y el caracter siguiente indistintamente
         if (c == '\\') {
-            comp->string[strlen(comp->string)] = c;
+            //comp->string[strlen(comp->string)] = c;
+            anadirCaracter();
             c = sigCaracter();
-            comp->string[strlen(comp->string)] = c;
+
+            //comp->string[strlen(comp->string)] = c;
+            anadirCaracter();
             c = sigCaracter();
         }
 
         //Añadimos el caracter
-        comp->string[strlen(comp->string)] = c;
+        //comp->string[strlen(comp->string)] = c;
+        anadirCaracter();
         c = sigCaracter();
     }
 
     //Añadimos " de cierre
-    comp->string[strlen(comp->string)] = c;
+    anadirCaracter();
+    //comp->string[strlen(comp->string)] = c;
 
     //Asignamos tipo de lexema
+    comp->string = (char*) realloc(comp->string, strlen(aux) * sizeof (char));
+    strcpy(comp->string, aux);
     comp->id = T_CADENA;
 
     //Aceptamos
@@ -380,10 +390,23 @@ void igualigual() { //Comprobamos ==
 }
 
 ////OTRAS FUNCIONES////
+
 void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
     insertaElemento(comp);
 }
 
-void anadirCaracter() {
+void anadirCaracter() { //Funcion que añade un caracter a la cadena que se esta analizando
 
+    //Comprobamos si se llego al límite de memoria reservada
+    /*if (strlen(aux) % 8 == 0) {
+
+        //Reservamos otro "bloque"
+        aux = (char *) realloc(aux, strlen(aux) + 8);
+    }*/
+    
+    //Aumentamos el tamano
+    aux = (char *) realloc(aux, strlen(aux) + 8);
+
+    //Añadimos el caracter
+    aux[strlen(aux)] = c;
 }
