@@ -130,7 +130,7 @@ void insertarPalReservada(char* lexema, int id) { //Inserta un componente léxic
 void imprimeTabla() { //Imprime el contenido de la tabla
     printf("\n/////TABLA DE SIMBOLOS/////\n");
     imprimeElemento(&tabla);
-    printf("///////////////////////////\n\n");
+    printf("////////////////////////////\n\n");
 }
 
 void asignarID(compLex* comp) { //Busca un lexema en la tabla y le asigna el id correspondiente

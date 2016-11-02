@@ -106,7 +106,6 @@ void einicial() { //Estado inicial
 
         //Caracteres simples
     } else if (c == ';' || c == '(' || c == ')' || c == '[' || c == ']' || c == ',' || c == '<' || c == '>' || c == '*' || c == '-' || c == '{' || c == '}' || c == '.') {
-        comp->string[strlen(comp->string)] = c; //Asignamos el lexema
         comp->id = (int) c; //Asignamos el codigo ascii
         c = sigCaracter();
         e = 0;
@@ -126,7 +125,7 @@ void alfanum() { //Funcion para cadenas alfanumericas
 
     //Puede contener caracteres alfanumericos o _
     if (isalnum(c) || c == '_') {
-        comp->string[strlen(comp->string)] = c;
+        //comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
     } else {
@@ -262,7 +261,6 @@ void enteros() { //Reconoce numeros enteros sin signo
 
     //Pueden ser numeros o _ 
     while (isdigit(c) || c == '_') {
-        comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
     }
 
@@ -274,7 +272,6 @@ void enteros() { //Reconoce numeros enteros sin signo
 void reales() { //Reconoce numeros de punto flotante
 
     //Añadimos el .
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Añadimos los numeros que siguen al punto
@@ -287,32 +284,28 @@ void reales() { //Reconoce numeros de punto flotante
 void binarios() {
 
     //Añadimos el 0
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Comprobamos que la siguiente letra sea b 0 B
     if (c == 'b' || c == 'B') {
 
         //Añadimos la b
-        comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
-        
+
         //Cadena mal formada
-        if(c != 1 || c != 0){
-            
+        if (c != 1 || c != 0) {
+
         }
 
         //Añadimos los numeros que siguen
         while (c == '1' || c == '0') {
-            comp->string[strlen(comp->string)] = c;
             c = sigCaracter();
 
         }
-        
-        
+
+
     }
-    
-    else{
+    else {
         comp->id = T_INTEGER;
         return;
     }
@@ -324,12 +317,10 @@ void binarios() {
 void nCientifica() {
 
     //Añadimos la e
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Despues de la e tiene que haber un + o un -
     if (c == '+' || c == '-' || isdigit(c)) {
-        comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
         //Añadimos el resto de numeros
@@ -347,19 +338,16 @@ void nCientifica() {
 void masigualmasmas() { //Reconoce las cadenas += y ++
 
     //Añadimos el +
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Masigual
     if (c == '=') {
-        comp->string[strlen(comp->string)] = c;
         comp->id = MASIGUAL;
         c = sigCaracter();
         e = 0;
 
         //Masmas
     } else if (c == '+') {
-        comp->string[strlen(comp->string)] = c;
         comp->id = MASMAS;
         c = sigCaracter();
         e = 0;
@@ -374,12 +362,10 @@ void masigualmasmas() { //Reconoce las cadenas += y ++
 void igualigual() { //Comprobamos ==
 
     //Añadimos =
-    comp->string[strlen(comp->string)] = c;
     c = sigCaracter();
 
     //Si el siguiente caracter es otro =
     if (c == '=') {
-        comp->string[strlen(comp->string)] = c;
         comp->id = IGUALIGUAL;
         c = sigCaracter();
         e = 0;
@@ -395,21 +381,16 @@ void igualigual() { //Comprobamos ==
 ////OTRAS FUNCIONES////
 
 void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
-    insertaElemento(comp);
-}
-
-void anadirCaracter() { //Funcion que añade un caracter a la cadena que se esta analizando
-
-    //Comprobamos si se llego al límite de memoria reservada
-    /*if (strlen(aux) % 8 == 0) {
-
-        //Reservamos otro "bloque"
-        aux = (char *) realloc(aux, strlen(aux) + 8);
-    }*/
-
-    //Aumentamos el tamano
-    aux = (char *) realloc(aux, strlen(aux) + 8);
-
-    //Añadimos el caracter
-    aux[strlen(aux)] = c;
+    
+    //"Devolvemos" un caracter   
+    retroceder();      
+    
+    //Obtenemos el lexema
+    comp->string = obtenerLexema(); 
+    
+    //Pasamos al caracter siguiente
+    sigCaracter(); 
+    
+    //Insertamos el componente en la tabla
+    insertaElemento(comp); 
 }

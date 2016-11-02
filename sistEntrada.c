@@ -49,10 +49,13 @@ void igualar(){ //Iguala el puntero inicial al final
 }
 
 char* obtenerLexema(){ //Devuelve un componente lexico
+    char* aux;
     char* lexema = (char*) malloc(64);
-    while(inicio != final){
-        lexema[strlen(lexema)] = *inicio;
-        inicio++;
+    
+    aux = inicio;
+    while(aux != final){
+        lexema[strlen(lexema)] = *aux;
+        aux++;
     }
     
     //printf("%s", lexema);
