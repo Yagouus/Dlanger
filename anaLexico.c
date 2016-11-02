@@ -296,6 +296,11 @@ void binarios() {
         //Añadimos la b
         comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
+        
+        //Cadena mal formada
+        if(c != 1 || c != 0){
+            
+        }
 
         //Añadimos los numeros que siguen
         while (c == '1' || c == '0') {
@@ -303,6 +308,13 @@ void binarios() {
             c = sigCaracter();
 
         }
+        
+        
+    }
+    
+    else{
+        comp->id = T_INTEGER;
+        return;
     }
 
     //Asignamos el tipo de lexema

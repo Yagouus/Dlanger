@@ -23,3 +23,5 @@ void nCientifica();
 
 //Otras funciones
 void anadirCaracter();
+
+compLex* devolver();
