@@ -7,10 +7,8 @@
 //DEFINICION DE VARIABLES
 FILE * f; //Puntero al fichero a compilar
 char * buffer; //Buffer en el que se guarda el fichero
-char * puntero; //Puntero al caracter actual
 char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
-
 
 void load() { //Funcion de inicializacion
 
@@ -23,42 +21,47 @@ void load() { //Funcion de inicializacion
     }
 
     //Cargamos el fichero en memoria
-    if (fread(buffer, TAM, 1, f) != 1) {
-        error("Error cargando el archivo en memoria");
-    }
-    
+    fread(buffer, TAM, 1, f);
+
+    //Le añadimos EOF
     strcat(buffer, "\0");
-    
+
     //Apuntamos al comienzo del fichero
-    puntero = buffer;
     inicio = buffer;
     final = buffer;
 
 }
 
-char sigCaracter() { //Devuelve caracter a caracter
-    
-    while(*final != EOF){
-        return *(final++);        
+char sigCaracter() { //"Devuelve" el caracter siguiente
+
+    //Avanzamos el puntero al final del lexema
+    while (*final != EOF) {
+        return *(final++);
     }
-    
+
 }
 
-void igualar(){ //Iguala el puntero inicial al final
+void igualar() { //Iguala el puntero inicial al final
     inicio = final;
 }
 
-char* obtenerLexema(){ //Devuelve un componente lexico
-    char* aux;
-    char* lexema = (char*) malloc(64);
-    
-    aux = inicio;
-    while(aux != final){
+char* obtenerLexema() { //Devuelve un lexema
+
+    //Puntero auxiliar al caracter actual
+    char* aux = inicio;
+
+    //Lexema que se devolverá
+    char* lexema = (char*) malloc(final - inicio);
+
+    while (aux != final) {
+        
+        //Anadimos el caracter actual
         lexema[strlen(lexema)] = *aux;
+        
+        //Aumentamos posicion
         aux++;
     }
-    
-    //printf("%s", lexema);
+
     return lexema;
 }
 
@@ -67,7 +70,7 @@ void close() { //Funcion de liberacion de memoria
     free(buffer);
 }
 
-void retroceder(){
+void retroceder() {
     final--;
 }
 

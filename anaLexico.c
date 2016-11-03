@@ -17,7 +17,6 @@ compLex* sigCompLex() {
 
     //Componente lexico
     comp = (compLex *) malloc(sizeof (compLex));
-    comp->string = (char *) malloc(64);
 
     //Estado
     e = 1;
@@ -125,7 +124,6 @@ void alfanum() { //Funcion para cadenas alfanumericas
 
     //Puede contener caracteres alfanumericos o _
     if (isalnum(c) || c == '_') {
-        //comp->string[strlen(comp->string)] = c;
         c = sigCaracter();
 
     } else {
