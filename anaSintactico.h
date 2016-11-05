@@ -1,5 +1,4 @@
 #include "gestErrores.h"
 
-
-//Funciones
+////FUNCIONES////
 void analisisSintactico();

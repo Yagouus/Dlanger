@@ -7,6 +7,8 @@
 //DEFINICION DE VARIABLES
 FILE * f; //Puntero al fichero a compilar
 char * buffer; //Buffer en el que se guarda el fichero
+char * buffer1; //Memoria 1
+char * buffer2; //Memoria 2
 char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
 
@@ -16,7 +18,7 @@ void load() { //Funcion de inicializacion
 
     //Tratamos de abrir el fichero
     if ((f = fopen("regression.d", "r")) == NULL) {
-        error("Error abriendo archivo");
+        error(FICHERO);
         return;
     }
 
@@ -53,11 +55,12 @@ char* obtenerLexema() { //Devuelve un lexema
     //Lexema que se devolverá
     char* lexema = (char*) malloc(final - inicio);
 
+    //Mientras no se llegue al final del lexema
     while (aux != final) {
-        
+
         //Anadimos el caracter actual
         lexema[strlen(lexema)] = *aux;
-        
+
         //Aumentamos posicion
         aux++;
     }
@@ -65,12 +68,21 @@ char* obtenerLexema() { //Devuelve un lexema
     return lexema;
 }
 
-void close() { //Funcion de liberacion de memoria
-    fclose(f);
-    free(buffer);
-}
-
-void retroceder() {
+void retroceder() { //Retrocede el puntero a final
     final--;
 }
+
+void close() { //Funcion de liberacion de memoria
+    
+    //Cerramos el fichero
+    fclose(f);
+    
+    //Liberamos el buffer1
+    free(buffer1);
+    
+    //Liberamos el buffer2
+    free(buffer2);
+}
+
+
 

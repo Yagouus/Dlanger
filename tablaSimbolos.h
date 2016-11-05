@@ -1,7 +1,7 @@
 #include "definiciones.h"
 #include "gestErrores.h"
 
-
+////TIPOS DE DATO////
 //Estructura de un componente lexico
 typedef struct {
     int id; //Contiene un id
@@ -16,7 +16,7 @@ struct nodo {
 
 typedef struct nodo * arbol;
 
-//Funciones arbol
+////ARBOL////
 void crea();
 void destruye();
 unsigned esVacio();
@@ -24,8 +24,9 @@ void inserta(arbol* A, compLex* comp);
 compLex* busca(arbol A, compLex *comp);
 arbol izq();
 arbol der();
+void imprimeElemento(arbol* A);
 
-//Funciones tabla
+////TABLA SIMBOLOS////
 void crearTabla();
 void destruyeTabla();
 void inicializa();

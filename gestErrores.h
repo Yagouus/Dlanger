@@ -1,2 +1,6 @@
+////TIPOS////
+#define FICHERO 1
+#define LEXEMA 2
 
-void error(char* mensaje);
+//Muestra el error ocurrido
+void error(int error);

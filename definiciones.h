@@ -9,7 +9,6 @@
 #define INT 307
 #define VOID 308
 
-
 //Operadores
 #define MASIGUAL 310
 #define MASMAS 311

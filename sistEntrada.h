@@ -1,19 +1,16 @@
 #include "gestErrores.h"
 
+//Tamaño del buffer
 #define TAM 2048
 
-
-//Carga de datos
+////FUNCIONES////
 void load();
-
-//Caracter siguiente
 char sigCaracter();
-
-//Retroceder un caracter
 void retroceder();
-
-//Liberacion de memoria
+void igualar();
+char* obtenerLexema();
 void close();
 
-char* obtenerLexema();
-void igualar();
+
+
+

@@ -5,23 +5,18 @@
 //Devuelve un lexema
 compLex * sigCompLex();
 
-//Registra una cadena en la tabla de simbolos
-void registrarTabla();
-
-//Autómatas
-void alfanum();
+////AUTOMATA////
 void einicial();
-void numeros();
+void alfanum();
 void comentarios();
-void igualigual();
-void masigualmasmas();
 void comillas();
-void binarios();
-void reales();
+void numeros();
 void enteros();
+void reales();
+void binarios();
 void nCientifica();
+void masigualmasmas();
+void igualigual();
 
-//Otras funciones
-void anadirCaracter();
-
-compLex* devolver();
+////OTRAS FUNCIONES////
+void registrarTabla();
