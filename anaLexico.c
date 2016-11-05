@@ -116,7 +116,7 @@ void einicial() { //Estado inicial
 
         //Estado de aceptacion
     } else {
-        e = 0;
+        error(CARACTER);
     }
 }
 
@@ -292,7 +292,8 @@ void binarios() {
 
         //Cadena mal formada
         if (c != 1 || c != 0) {
-
+            error(LEXEMA);
+            return;
         }
 
         //Añadimos los numeros que siguen
@@ -301,9 +302,7 @@ void binarios() {
 
         }
 
-
-    }
-    else {
+    } else {
         comp->id = T_INTEGER;
         return;
     }
@@ -329,7 +328,7 @@ void nCientifica() {
 
         //Error, numero mal formado
     } else {
-
+        error(LEXEMA);        
     }
 }
 
@@ -379,16 +378,16 @@ void igualigual() { //Comprobamos ==
 ////OTRAS FUNCIONES////
 
 void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
-    
+
     //"Devolvemos" un caracter   
-    retroceder();      
-    
+    retroceder();
+
     //Obtenemos el lexema
-    comp->string = obtenerLexema(); 
-    
+    comp->string = obtenerLexema();
+
     //Pasamos al caracter siguiente
-    sigCaracter(); 
-    
+    sigCaracter();
+
     //Insertamos el componente en la tabla
-    insertaElemento(comp); 
+    insertaElemento(comp);
 }
