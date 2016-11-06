@@ -37,7 +37,7 @@ char sigCaracter() { //"Devuelve" el caracter siguiente
     if (*final == EOF) {
 
         //Comprobamos si es el final de fichero
-        if (finalFichero) {
+        if (finalFichero() == 1) {
             return EOF;
         }
 
@@ -62,6 +62,7 @@ char* obtenerLexema() { //Devuelve un lexema
 
     //Puntero auxiliar al caracter actual
     char* aux = inicio;
+    char* fin = final;
 
     //Lexema que se devolverá
     char* lexema = (char*) malloc(TAM);
@@ -72,8 +73,10 @@ char* obtenerLexema() { //Devuelve un lexema
         if (*aux == EOF) {
             if (mem == 0) {
                 aux = buffer2;
+                continue;
             } else {
                 aux = buffer1;
+                continue;
             }
         }
 
@@ -88,14 +91,15 @@ char* obtenerLexema() { //Devuelve un lexema
 }
 
 void retroceder() { //Retrocede el puntero a final
-    if (mem == 0 && final == buffer1) {
+    char *c = final;
+    if (mem == 1 && final == buffer1) {
         final = buffer2 + TAM - 1;
         flag = 1;
-    } else if (mem == 1 && final == buffer2) {
+    } else if (mem == 0 && final == buffer2) {
         final = buffer2 + TAM - 1;
         flag = 1;
     } else {
-        final--;
+        c = final--;
     }
 }
 
@@ -111,25 +115,32 @@ void close() { //Funcion de liberacion de memoria
     free(buffer2);
 }
 
-void cargaBuffer1() {
-    int c = fread(buffer1, 1, TAM, f);
-    fread(buffer1, TAM, 1, f);
-    //strcat(buffer1, "\0");
-    buffer1[c] = EOF;
+void cargaBuffer1() { //Carga el fichero en la memoria 1
+    
+    //Anadimos EOF al final de los caracteres leidos
+    buffer1[fread(buffer1, 1, TAM, f)] = EOF;
+    
+    //Apuntamos final al nuevo buffer cargado
     final = buffer1;
+    
+    //Cambiamos el indicador de memoria usada
     mem = 1;
 }
 
-void cargaBuffer2() {
-    int c = fread(buffer2, 1, TAM, f);
-    //strcat(buffer2, "\0");
-    buffer2[c] = EOF;
+void cargaBuffer2() { //Carga el fichero en la memoria 2
+    
+    //Anadimos EOF al final de los caracteres leidos
+    buffer2[fread(buffer2, 1, TAM, f)] = EOF;
+    
+    //Apuntamos final al nuevo buffer cargado
     final = buffer2;
-    char a = *final;
+    char* fin = buffer2;
+    
+    //Cambiamos el indicador de memoria usada
     mem = 0;
 }
 
-void cargaMemorias() {
+void cargaMemorias() { //Cargamos la memoria que corresponda
     if (mem == 0) {
         cargaBuffer1();
     } else {
@@ -137,7 +148,7 @@ void cargaMemorias() {
     }
 }
 
-void cambiaMemorias() {
+void cambiaMemorias() { //"Cambiamos" la memoria que se esta usando
     if (mem == 0) {
         mem = 1;
     } else {
@@ -146,16 +157,17 @@ void cambiaMemorias() {
 }
 
 int finalFichero() {
+    
+    //Segun la memoria que se este usando
+    //Comprobamos si el EOF es el de final de buffer
+    //O el de final de cadena
     if (mem == 0) {
-        int x = final - buffer2;
         if (final - buffer2 != TAM) {
-            return 1;
+            return EOF;
         }
     } else {
-        int x = final - buffer1;
         if (final - buffer1 != TAM) {
-            return 1;
+            return EOF;
         }
     }
-    return 0;
 }
