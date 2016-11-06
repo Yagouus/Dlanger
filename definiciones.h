@@ -4,10 +4,9 @@
 #define FOREACH 302
 #define RETURN 303
 #define CAST 304
-#define WRITEFLN 305
-#define DOUBLE 306
-#define INT 307
-#define VOID 308
+#define DOUBLE 305
+#define INT 306
+#define VOID 307
 
 //Operadores
 #define MASIGUAL 310

@@ -88,7 +88,6 @@ void inicializa() { //Inicializa la tabla de simbolos
     insertarPalReservada("FOREACH", FOREACH);
     insertarPalReservada("RETURN", RETURN);
     insertarPalReservada("CAST", CAST);
-    insertarPalReservada("WRITEFLN", WRITEFLN);
 
     //Tipos de dato
     insertarPalReservada("INT", INT);
