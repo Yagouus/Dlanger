@@ -12,6 +12,7 @@ char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
 int mem = 0; //Indica la memoria que se esta leyendo
 int cargadas = 0; //Indica si las dos memorias estan cargadas
+char* buffActual;
 
 void load() { //Funcion de inicializacion
 
@@ -43,18 +44,18 @@ char sigCaracter() { //"Devuelve" el caracter siguiente
 
         //Comprobamos si las dos memorias estan cargadas
         if (cargadas == 0) {
-            
+
             //Cargamos la que no lo este
             cargaMemorias();
-            
+
         } else {
-            
             //Cambiamos la memoria a usar
-            cambiaMemorias();            
-            
+            cambiaMemorias();
+            return *final;
         }
     }
 
+    //Devolvemos el puntero a una posicion 
     return *(final++);
 
 }
@@ -68,9 +69,15 @@ char* obtenerLexema() { //Devuelve un lexema
     //Puntero auxiliar al caracter actual
     char* aux = inicio;
     char* fin = final;
+    char* lexema;
+    char* a = buffActual;
 
     //Lexema que se devolverá
-    char* lexema = (char*) malloc(TAM);
+    if (inicio < final) {
+        lexema = (char*) malloc(final - inicio);
+    } else {
+        lexema = (char*) malloc(inicio - final);
+    }
 
     //Mientras no se llegue al final del lexema
     while (aux != final) {
@@ -129,6 +136,7 @@ void cargaBuffer1() { //Carga el fichero en la memoria 1
 
     //Apuntamos final al nuevo buffer cargado
     final = buffer1;
+    buffActual = buffer1;
 
     //Cambiamos el indicador de memoria usada
     mem = 1;
@@ -141,7 +149,7 @@ void cargaBuffer2() { //Carga el fichero en la memoria 2
 
     //Apuntamos final al nuevo buffer cargado
     final = buffer2;
-    char* fin = buffer2;
+    buffActual = buffer2;
 
     //Cambiamos el indicador de memoria usada
     mem = 0;
@@ -156,13 +164,18 @@ void cargaMemorias() { //Cargamos la memoria que corresponda
 }
 
 void cambiaMemorias() { //"Cambiamos" la memoria que se esta usando
-    
+
     if (mem == 0) {
         mem = 1;
+        final = buffer1;
+        buffActual = buffer1;
     } else {
         mem = 0;
+        final == buffer2;
+        buffActual = buffer2;
     }
-    
+
+    //Indicamos que no estan las 2 cargadas
     cargadas = 0;
 }
 
