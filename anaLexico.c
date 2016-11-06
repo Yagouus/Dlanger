@@ -8,15 +8,9 @@
 char c;
 int e;
 compLex* comp;
-char * aux;
 
 compLex* sigCompLex() {
     
-    char a;
-    
-    //Inicializamos valores
-    aux = (char*) malloc(8);
-
     //Componente lexico
     comp = (compLex *) malloc(sizeof (compLex));
 
@@ -28,7 +22,6 @@ compLex* sigCompLex() {
 
     while (c != EOF) {
         
-        a = c;
         switch (e) {          
             
                 //Estado inicial
@@ -399,4 +392,8 @@ void registrarTabla() { //Funcion que registra un ID en la tabla de simbolos
 
     //Insertamos el componente en la tabla
     insertaElemento(comp);
+}
+
+void liberarLexico(){
+    free(comp);
 }

@@ -1,7 +1,7 @@
 #include "gestErrores.h"
 
 //Tamaño del buffer
-#define TAM 128
+#define TAM 256
 
 ////FUNCIONES////
 void load();

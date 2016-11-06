@@ -20,3 +20,4 @@ void igualigual();
 
 ////OTRAS FUNCIONES////
 void registrarTabla();
+void liberarLexico();

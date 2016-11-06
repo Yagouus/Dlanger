@@ -22,10 +22,7 @@ int main(int argc, char** argv) {
 
     //Liberamos memoria
     destruyeTabla();
+    liberarLexico();
     close();
-
-
-
-    return (EXIT_SUCCESS);
 }
 
