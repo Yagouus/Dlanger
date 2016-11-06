@@ -12,6 +12,7 @@ char* obtenerLexema();
 void close();
 void cargaMemorias();
 void cambiaMemorias();
+int finalFichero();
 
 
 

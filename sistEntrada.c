@@ -6,7 +6,6 @@
 
 //DEFINICION DE VARIABLES
 FILE * f; //Puntero al fichero a compilar
-char * buffer; //Buffer en el que se guarda el fichero
 char * buffer1; //Memoria 1
 char * buffer2; //Memoria 2
 char * inicio; //Puntero al ppio de un lexema
@@ -16,7 +15,6 @@ int flag = 0; //Indica si las dos memorias estan cargadas
 
 void load() { //Funcion de inicializacion
 
-    buffer = (char *) malloc(TAM + 1 * sizeof (char *));
     buffer1 = (char *) malloc(TAM + 1 * sizeof (char *));
     buffer2 = (char *) malloc(TAM + 1 * sizeof (char *));
 
@@ -27,40 +25,20 @@ void load() { //Funcion de inicializacion
     }
 
     //Cargamos el fichero en memoria
-    //fread(buffer, TAM, 1, f);
     cargaMemorias();
 
-    //Le añadimos EOF
-    //strcat(buffer, "\0");
-    //buffer[strlen(buffer)] = '\0';
-
     //Apuntamos al comienzo del fichero
-    inicio = buffer1;
-    final = buffer1;
+    inicio = final;
 
 }
 
 char sigCaracter() { //"Devuelve" el caracter siguiente
 
-    /*
-    //Avanzamos el puntero al final del lexema
-    while (*final != EOF) {
-        return *(final++);
-    }*/
-
     if (*final == EOF) {
 
         //Comprobamos si es el final de fichero
-        if (mem == 0) {
-            int x = final - buffer2;
-            if (final - buffer2 != TAM) {
-                return EOF;
-            }
-        } else {
-            int x = final - buffer1;
-            if (final - buffer1 != TAM) {
-                return EOF;
-            }
+        if (finalFichero) {
+            return EOF;
         }
 
 
@@ -165,4 +143,19 @@ void cambiaMemorias() {
     } else {
         mem = 0;
     }
+}
+
+int finalFichero() {
+    if (mem == 0) {
+        int x = final - buffer2;
+        if (final - buffer2 != TAM) {
+            return 1;
+        }
+    } else {
+        int x = final - buffer1;
+        if (final - buffer1 != TAM) {
+            return 1;
+        }
+    }
+    return 0;
 }
