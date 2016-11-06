@@ -1,0 +1,18 @@
+
+////PARA COMPILAR////
+-Situarse sobre el directorio con todos los archivos necesarios (.c y .h)
+-Ejecutar el comando "make"
+-Se generará un ejecutable de nombre P1
+
+
+////PARA EJECUTAR////
+-El ejecutable admite como parámetro la ruta del fichero a analizar
+-Ejecutar el comando "./P1 regression.d" 
+-Pudiendo sustituir "regression.d" por el archivo que se desee
+-En caso de no proporcionar ningun fichero como argumento el programa mostrara un error y terminara
+
+
+////SALIDA DEL PROGRAMA////
+-Se mostrara la tabla de simbolos con su contenido inicial
+-Se mostraran todos los lexemas encontrados
+-Se volvera a mostrar la tabla de simbolos con el contenido final
