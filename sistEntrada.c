@@ -11,7 +11,7 @@ char * buffer2; //Memoria 2
 char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
 int mem = 0; //Indica la memoria que se esta leyendo
-int flag = 0; //Indica si las dos memorias estan cargadas
+int cargadas = 0; //Indica si las dos memorias estan cargadas
 
 void load() { //Funcion de inicializacion
 
@@ -41,12 +41,17 @@ char sigCaracter() { //"Devuelve" el caracter siguiente
             return EOF;
         }
 
-
-        if (flag == 0) {
+        //Comprobamos si las dos memorias estan cargadas
+        if (cargadas == 0) {
+            
+            //Cargamos la que no lo este
             cargaMemorias();
+            
         } else {
-            cambiaMemorias();
-            flag = 0;
+            
+            //Cambiamos la memoria a usar
+            cambiaMemorias();            
+            
         }
     }
 
@@ -91,15 +96,17 @@ char* obtenerLexema() { //Devuelve un lexema
 }
 
 void retroceder() { //Retrocede el puntero a final
-    char *c = final;
+
+    //Si el lexema empieza en un buffer
+    //Pero termina en el primer caracter del siguiente
     if (mem == 1 && final == buffer1) {
         final = buffer2 + TAM - 1;
-        flag = 1;
+        cargadas = 1;
     } else if (mem == 0 && final == buffer2) {
         final = buffer2 + TAM - 1;
-        flag = 1;
+        cargadas = 1;
     } else {
-        c = final--;
+        final--;
     }
 }
 
@@ -116,26 +123,26 @@ void close() { //Funcion de liberacion de memoria
 }
 
 void cargaBuffer1() { //Carga el fichero en la memoria 1
-    
+
     //Anadimos EOF al final de los caracteres leidos
     buffer1[fread(buffer1, 1, TAM, f)] = EOF;
-    
+
     //Apuntamos final al nuevo buffer cargado
     final = buffer1;
-    
+
     //Cambiamos el indicador de memoria usada
     mem = 1;
 }
 
 void cargaBuffer2() { //Carga el fichero en la memoria 2
-    
+
     //Anadimos EOF al final de los caracteres leidos
     buffer2[fread(buffer2, 1, TAM, f)] = EOF;
-    
+
     //Apuntamos final al nuevo buffer cargado
     final = buffer2;
     char* fin = buffer2;
-    
+
     //Cambiamos el indicador de memoria usada
     mem = 0;
 }
@@ -149,15 +156,18 @@ void cargaMemorias() { //Cargamos la memoria que corresponda
 }
 
 void cambiaMemorias() { //"Cambiamos" la memoria que se esta usando
+    
     if (mem == 0) {
         mem = 1;
     } else {
         mem = 0;
     }
+    
+    cargadas = 0;
 }
 
 int finalFichero() {
-    
+
     //Segun la memoria que se este usando
     //Comprobamos si el EOF es el de final de buffer
     //O el de final de cadena
