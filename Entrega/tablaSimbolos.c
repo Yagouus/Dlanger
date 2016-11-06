@@ -59,11 +59,12 @@ arbol der(arbol A) { //Devuelve el nodo dcho
 
 void imprimeElemento(arbol* A) { //Imprime un elemento del arbol
 
-    //Se recorre el arbol inorden y se imprimen todos los elementos
+    //Se recorre el arbol y se imprimen todos los elementos
     if (*A != NULL) {
         imprimeElemento(&(*A)->izq);
-        imprimeElemento(&(*A)->der);
         printf("<%d><%s>\n", (*A)->lexema->id, (*A)->lexema->string);
+        imprimeElemento(&(*A)->der);
+        
     }
 
 }
@@ -87,16 +88,11 @@ void inicializa() { //Inicializa la tabla de simbolos
     insertarPalReservada("FOREACH", FOREACH);
     insertarPalReservada("RETURN", RETURN);
     insertarPalReservada("CAST", CAST);
-    insertarPalReservada("WRITEFLN", WRITEFLN);
 
     //Tipos de dato
     insertarPalReservada("INT", INT);
     insertarPalReservada("DOUBLE", DOUBLE);
     insertarPalReservada("VOID", VOID);
-
-    //Identificadores
-    insertarPalReservada("ID", ID);
-
 
 }
 

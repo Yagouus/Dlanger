@@ -12,7 +12,6 @@ char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
 int mem = 0; //Indica la memoria que se esta leyendo
 int cargadas = 0; //Indica si las dos memorias estan cargadas
-char* buffActual;
 
 void load() { //Funcion de inicializacion
 
@@ -70,7 +69,6 @@ char* obtenerLexema() { //Devuelve un lexema
     char* aux = inicio;
     char* fin = final;
     char* lexema;
-    char* a = buffActual;
 
     //Lexema que se devolverá
     if (inicio < final) {
@@ -82,10 +80,13 @@ char* obtenerLexema() { //Devuelve un lexema
     //Mientras no se llegue al final del lexema
     while (aux != final) {
 
+        //Si llegamos al centinela
         if (*aux == EOF) {
+            
+            //Comprobamos en que memoria estamos y cambiamos
             if (mem == 0) {
                 aux = buffer2;
-                continue;
+                continue;                
             } else {
                 aux = buffer1;
                 continue;
@@ -107,6 +108,8 @@ void retroceder() { //Retrocede el puntero a final
     //Si el lexema empieza en un buffer
     //Pero termina en el primer caracter del siguiente
     if (mem == 1 && final == buffer1) {
+        
+        //Nos colocamos en el penultimo caracter (NO EOF)
         final = buffer2 + TAM - 1;
         cargadas = 1;
     } else if (mem == 0 && final == buffer2) {
@@ -136,7 +139,6 @@ void cargaBuffer1() { //Carga el fichero en la memoria 1
 
     //Apuntamos final al nuevo buffer cargado
     final = buffer1;
-    buffActual = buffer1;
 
     //Cambiamos el indicador de memoria usada
     mem = 1;
@@ -149,7 +151,6 @@ void cargaBuffer2() { //Carga el fichero en la memoria 2
 
     //Apuntamos final al nuevo buffer cargado
     final = buffer2;
-    buffActual = buffer2;
 
     //Cambiamos el indicador de memoria usada
     mem = 0;
@@ -165,14 +166,18 @@ void cargaMemorias() { //Cargamos la memoria que corresponda
 
 void cambiaMemorias() { //"Cambiamos" la memoria que se esta usando
 
+    //Comprobamos en que memoria estamos
     if (mem == 0) {
+        
+        //Apuntamos a la otra memoria
         mem = 1;
         final = buffer1;
-        buffActual = buffer1;
+        
     } else {
+        
+        //Apuntamos a la otra memoria
         mem = 0;
         final == buffer2;
-        buffActual = buffer2;
     }
 
     //Indicamos que no estan las 2 cargadas

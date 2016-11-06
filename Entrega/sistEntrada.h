@@ -1,7 +1,7 @@
 #include "gestErrores.h"
 
 //Tamaño del buffer
-#define TAM 512
+#define TAM 128
 
 ////FUNCIONES////
 void load();
@@ -12,6 +12,7 @@ char* obtenerLexema();
 void close();
 void cargaMemorias();
 void cambiaMemorias();
+int finalFichero();
 
 
 
