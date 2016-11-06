@@ -10,7 +10,7 @@ char * buffer1; //Memoria 1
 char * buffer2; //Memoria 2
 char * inicio; //Puntero al ppio de un lexema
 char * final; //Puntero al final de un lexema
-int mem = 0; //Indica la memoria que se esta leyendo
+int mem = 0; //Memoria en uso
 int cargadas = 0; //Indica si las dos memorias estan cargadas
 
 void load(char* fichero) { //Funcion de inicializacion
