@@ -7,7 +7,7 @@
 int main(int argc, char** argv) {
 
     //Cargamos el fichero a compilar
-    load();
+    load(argv[1]);
 
     //Creamos, inicializamos y mostramos la TS
     crearTabla();

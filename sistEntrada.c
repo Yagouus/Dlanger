@@ -13,13 +13,13 @@ char * final; //Puntero al final de un lexema
 int mem = 0; //Indica la memoria que se esta leyendo
 int cargadas = 0; //Indica si las dos memorias estan cargadas
 
-void load() { //Funcion de inicializacion
+void load(char* fichero) { //Funcion de inicializacion
 
     buffer1 = (char *) malloc(TAM + 1 * sizeof (char *));
     buffer2 = (char *) malloc(TAM + 1 * sizeof (char *));
 
     //Tratamos de abrir el fichero
-    if ((f = fopen("regression.d", "r")) == NULL) {
+    if ((f = fopen(fichero, "r")) == NULL) {
         error(FICHERO);
         return;
     }
